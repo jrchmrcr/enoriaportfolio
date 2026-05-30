@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jorich Maricar Enoria – Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0c0b;
+      --white: #f8f5f0;
+      --off: #f0ebe2;
+      --mid: #c8bfaf;
+      --muted: #8a8278;
+      --red: #c0392b;
+      --red-dark: #922b21;
+      --teal: #1a5276;
+      --rule: rgba(0,0,0,0.12);
+      --col-gap: 2.5rem;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Figtree', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* ──────────────────────── UTILITIES ──────────────────────── */
+    .display {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.03em;
+      line-height: 0.93;
+    }
+    .serif { font-family: 'Cormorant Garamond', serif; }
+    .label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .rule-h { height: 1px; background: var(--rule); width: 100%; }
+    .rule-v { width: 1px; background: var(--rule); align-self: stretch; flex-shrink: 0; }
+    .accent-rule { height: 3px; background: var(--red); display: inline-block; }
+
+    /* ──────────────────────── NAV ──────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem;
+      height: 52px;
+      background: var(--white);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-issue {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .nav-issue img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+    .nav-center {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .nav-center img { height: 32px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 0; list-style: none; }
+    .nav-links li { border-left: 1px solid var(--rule); }
+    .nav-links a {
+      display: block;
+      padding: 0 1.1rem;
+      height: 52px;
+      line-height: 52px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); background: var(--off); }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      gap: 5px;
+      padding: 4px;
+    }
+    .hamburger span { width: 22px; height: 1.5px; background: var(--black); display: block; transition: all 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    /* ──────────────────────── HERO — FULL-SCREEN TYPE + PHOTO ──────────────────────── */
+    #hero {
+      margin-top: 52px;
+      min-height: calc(100vh - 52px);
+      background: var(--off);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border-bottom: 3px solid var(--black);
+    }
+
+    /* Top strip */
+    .hero-topstrip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 3rem;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+    .hero-topstrip .ts-left {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-topstrip .ts-right {
+      display: flex; gap: 2.5rem;
+    }
+    .hero-topstrip .ts-right span {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-topstrip .ts-right span b { color: var(--black); }
+
+    /* Big type rows */
+    .hero-type-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 3rem;
+      gap: 0;
+    }
+
+    .hero-row {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1;
+    }
+    .hero-row:first-child { border-top: 1px solid var(--rule); }
+
+    .hero-row .big-word {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5.5rem, 17vw, 15rem);
+      letter-spacing: 0.02em;
+      color: var(--black);
+      line-height: 0.9;
+      flex-shrink: 0;
+    }
+    .hero-row .big-word.red { color: var(--red); }
+    .hero-row .big-word.outline {
+      -webkit-text-stroke: 2px var(--black);
+      color: transparent;
+    }
+
+    /* Photo slot — sits inline between words */
+    .hero-photo-slot {
+      width: clamp(110px, 14vw, 200px);
+      height: clamp(130px, 17vw, 240px);
+      overflow: hidden;
+      flex-shrink: 0;
+      margin: 0 1.5rem;
+      border: 2px solid var(--mid);
+    }
+    .hero-photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* Italic serif accent word */
+    .hero-row .serif-word {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 11vw, 10rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--red);
+      line-height: 0.9;
+      flex-shrink: 0;
+    }
+
+    /* Spacer that pushes things apart */
+    .hero-row .row-spacer { flex: 1; }
+
+    /* Small label floating in row */
+    .hero-row .row-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      margin: 0 1rem;
+      flex-shrink: 0;
+    }
+
+    /* Bottom info bar */
+    .hero-infobar {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr 1px auto;
+      border-top: 3px solid var(--black);
+      flex-shrink: 0;
+    }
+    .hero-infobar .ib-cell {
+      padding: 1.25rem 2rem;
+    }
+    .hero-infobar .ib-cell .label { display: block; margin-bottom: 0.35rem; }
+    .hero-infobar .ib-cell p {
+      font-size: 0.82rem;
+      color: var(--black);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .hero-infobar .ib-rule { width: 1px; background: var(--rule); }
+    .hero-infobar .ib-ctas {
+      padding: 1.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .hero-ctas { display: flex; flex-direction: column; gap: 0.65rem; }
+    .btn-fill {
+      background: var(--black);
+      color: var(--white);
+      padding: 0.8rem 1.5rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-fill:hover { background: var(--red); }
+    .btn-ghost {
+      border: 1px solid var(--black);
+      color: var(--black);
+      padding: 0.8rem 1.5rem;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { background: var(--black); color: var(--white); }
+
+    /* ──────────────────────── SECTION COMMONS ──────────────────────── */
+    section { padding: 5rem 4rem; }
+
+    .section-masthead {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.75rem;
+    }
+    .section-masthead .display { font-size: clamp(2.5rem, 5vw, 4rem); }
+    .section-masthead .section-no {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+    .section-masthead .section-label-right {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ──────────────────────── ABOUT ──────────────────────── */
+    #about { background: var(--white); }
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1px 2fr;
+      gap: 0 var(--col-gap);
+    }
+    .about-sidebar {}
+    .about-sidebar .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      border: 1px solid var(--mid);
+      margin-bottom: 1.5rem;
+    }
+    .about-sidebar .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .about-pull {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--red);
+      line-height: 1.5;
+      border-left: 2px solid var(--red);
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .about-info-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .about-info-list .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.8rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.5rem;
+      gap: 1rem;
+    }
+    .about-info-list .item .k { color: var(--muted); letter-spacing: 0.06em; }
+    .about-info-list .item .v { font-weight: 600; text-align: right; }
+
+    .about-body { padding-left: 0.5rem; }
+    .about-dropcap { margin-bottom: 1.5rem; }
+    .about-dropcap::first-letter {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5rem;
+      line-height: 0.75;
+      float: left;
+      margin: 0.08em 0.12em 0 0;
+      color: var(--red);
+    }
+    .about-dropcap, .about-body p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: #2a2825;
+      margin-bottom: 1.25rem;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+    .about-body em { font-family: 'Cormorant Garamond', serif; font-size: 1.05em; font-style: italic; }
+
+    /* ──────────────────────── SKILLS ──────────────────────── */
+    #skills { background: var(--off); }
+    .skills-magazine {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border: 1px solid var(--rule);
+    }
+    .skill-col {
+      border-right: 1px solid var(--rule);
+      padding: 1.75rem 1.25rem;
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .skill-col:last-child { border-right: none; }
+    .skill-col:hover { background: var(--white); }
+    .skill-col-icon {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .skill-col-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      line-height: 1.1;
+    }
+    .skill-col-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .skill-col-tags { display: flex; flex-direction: column; gap: 0.35rem; }
+    .skill-col-tags span {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 0.3rem;
+    }
+
+    /* ──────────────────────── PROJECTS ──────────────────────── */
+    #projects { background: var(--white); }
+
+    /* Featured project — full-width */
+    .project-featured {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0 var(--col-gap);
+      border: 1px solid var(--rule);
+      margin-bottom: 2rem;
+    }
+    .project-featured .proj-img {
+      height: 360px;
+      overflow: hidden;
+    }
+    .project-featured .proj-img img { width: 100%; height: 100%; object-fit: cover; }
+    .project-featured-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+    .proj-meta { margin-bottom: 1.5rem; }
+    .proj-no {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .proj-role-tag {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      margin-bottom: 0.75rem;
+    }
+    .project-featured-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .project-featured-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.25rem; }
+    .proj-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .proj-tag {
+      border: 1px solid var(--mid);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      color: var(--muted);
+    }
+    .proj-link {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 1.5px solid var(--teal);
+      padding-bottom: 0.15rem;
+      transition: color 0.2s;
+      margin-right: 1rem;
+    }
+    .proj-link:hover { color: var(--red); border-bottom-color: var(--red); }
+
+    /* Grid projects */
+    .projects-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--rule);
+      border-top: none;
+      margin-bottom: 0;
+    }
+    .project-cell {
+      border-right: 1px solid var(--rule);
+      overflow: hidden;
+    }
+    .project-cell:last-child { border-right: none; }
+    .project-cell .proj-img {
+      height: 200px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--rule);
+    }
+    .project-cell .proj-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .project-cell:hover .proj-img img { transform: scale(1.04); }
+    .project-cell-body { padding: 1.5rem; }
+    .project-cell-body .proj-role-tag { margin-bottom: 0.65rem; }
+    .project-cell-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .project-cell-body p { font-size: 0.8rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+
+    /* Second row — 4 columns */
+    .projects-row-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--rule);
+      border-top: none;
+    }
+    .projects-row-4 .project-cell { border-right: 1px solid var(--rule); }
+    .projects-row-4 .project-cell:last-child { border-right: none; }
+    .projects-row-4 .proj-img { height: 160px; }
+
+    /* ──────────────────────── CERTIFICATIONS ──────────────────────── */
+    #certifications { background: var(--black); color: var(--white); }
+    #certifications .section-masthead { border-bottom-color: rgba(255,255,255,0.12); }
+    #certifications .section-masthead .display { color: var(--white); }
+    #certifications .section-masthead .section-label-right { color: rgba(255,255,255,0.35); }
+    .certs-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .cert-panel {
+      border-right: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: background 0.2s;
+    }
+    .cert-panel:last-child { border-right: none; }
+    .cert-panel:hover { background: rgba(255,255,255,0.04); }
+    .cert-no {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: rgba(255,255,255,0.08);
+      line-height: 1;
+    }
+    .cert-panel h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--white);
+    }
+    .cert-panel p { font-size: 0.72rem; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .cert-badge-link {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 0.2rem;
+      margin-top: auto;
+      transition: color 0.2s, border-color 0.2s;
+      align-self: flex-start;
+    }
+    .cert-badge-link:hover { color: var(--white); border-bottom-color: var(--white); }
+
+    /* ──────────────────────── SEMINARS ──────────────────────── */
+    #seminars { background: var(--off); }
+    .seminars-cols {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: 0 var(--col-gap);
+    }
+    .seminars-col { padding: 0 0.5rem; }
+    .seminar-entry {
+      display: flex;
+      gap: 1.25rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .seminar-entry:first-child { border-top: 1px solid var(--rule); }
+    .seminar-entry .sem-no {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--mid);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 2rem;
+    }
+    .seminar-entry h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.25rem; line-height: 1.35; }
+    .seminar-entry p { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+
+    /* ──────────────────────── CONTACT ──────────────────────── */
+    #contact {
+      background: var(--red);
+      color: #fff;
+      padding: 6rem 4rem;
+    }
+    .contact-inner { max-width: 900px; margin: 0 auto; }
+    .contact-kicker {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .contact-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      letter-spacing: 0.02em;
+      line-height: 0.9;
+      color: #fff;
+      margin-bottom: 2rem;
+    }
+    .contact-headline em {
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95em;
+      font-weight: 300;
+    }
+    .contact-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+    }
+    .contact-row {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      padding-top: 2rem;
+    }
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .contact-item .k { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .contact-item a { color: #fff; text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+    .contact-item a:hover { text-decoration: underline; }
+
+    /* ──────────────────────── FOOTER ──────────────────────── */
+    footer {
+      background: var(--black);
+      color: rgba(248,245,240,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+    }
+    footer span:first-child { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.1em; font-size: 0.85rem; }
+
+    /* ──────────────────────── LIGHTBOX ──────────────────────── */
+    .lightbox-overlay {
+      position: fixed; inset: 0;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.9); z-index: 9999; padding: 2rem;
+    }
+    .lightbox-overlay.visible { display: flex; }
+    .lightbox-content { position: relative; max-width: 100%; max-height: 100%; }
+    .lightbox-img { max-width: 92vw; max-height: 92vh; display: block; object-fit: contain; }
+    .lightbox-caption { margin-top: 0.75rem; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+    .lightbox-close {
+      position: absolute; top: -12px; right: -12px;
+      background: #fff; border-radius: 2px; padding: 5px 9px;
+      cursor: pointer; font-weight: 700; color: #111; font-size: 0.9rem;
+      border: none;
+    }
+
+    /* ──────────────────────── FADE IN ──────────────────────── */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; will-change: opacity, transform; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ──────────────────────── RESPONSIVE ──────────────────────── */
+    @media (max-width: 1024px) {
+      .skills-magazine { grid-template-columns: repeat(4, 1fr); }
+      .skill-col:nth-child(4) { border-right: none; }
+      .skill-col:nth-child(5) { border-top: 1px solid var(--rule); }
+      .skill-col:nth-child(6) { border-top: 1px solid var(--rule); }
+      .skill-col:nth-child(7) { border-top: 1px solid var(--rule); }
+      .projects-row { grid-template-columns: 1fr 1fr; }
+      .projects-row .project-cell:nth-child(2) { border-right: none; }
+      .projects-row .project-cell:nth-child(3) { border-top: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+      .projects-row-4 { grid-template-columns: repeat(2, 1fr); }
+      .projects-row-4 .project-cell:nth-child(2) { border-right: none; }
+      .projects-row-4 .project-cell:nth-child(3) { border-top: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+      .projects-row-4 .project-cell:nth-child(4) { border-top: 1px solid var(--rule); }
+    }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; flex-direction: column; gap: 0; position: fixed; top: 52px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--rule); z-index: 99; }
+      .nav-links.active { display: flex; }
+      .nav-links li { border-left: none; border-bottom: 1px solid var(--rule); }
+      .nav-links a { height: auto; line-height: 1; padding: 1rem 1.5rem; }
+      .hamburger { display: flex; }
+      .nav-center { display: none; }
+      section { padding: 3.5rem 1.75rem; }
+      #hero { padding: 0; }
+      .hero-topstrip .ts-right { display: none; }
+      .hero-type-block { padding: 0 1.5rem; }
+      .hero-photo-slot { width: clamp(70px, 18vw, 120px); height: clamp(85px, 22vw, 145px); margin: 0 0.75rem; }
+      .hero-infobar { grid-template-columns: 1fr; }
+      .hero-infobar .ib-rule { display: none; }
+      .hero-infobar .ib-cell { padding: 0.75rem 1.5rem; border-bottom: 1px solid var(--rule); }
+      .hero-infobar .ib-ctas { padding: 1rem 1.5rem; flex-direction: row; }
+      .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-layout .rule-v { display: none; }
+      .skills-magazine { grid-template-columns: repeat(2, 1fr); }
+      .skill-col { border-top: 1px solid var(--rule); }
+      .skill-col:nth-child(1), .skill-col:nth-child(2) { border-top: none; }
+      .skill-col:nth-child(odd) { border-right: 1px solid var(--rule); }
+      .skill-col:nth-child(even) { border-right: none; }
+      .project-featured { grid-template-columns: 1fr; }
+      .project-featured .rule-v { display: none; }
+      .project-featured .proj-img { height: 260px; }
+      .projects-row, .projects-row-4 { grid-template-columns: 1fr; }
+      .project-cell { border-right: none !important; border-top: 1px solid var(--rule); }
+      .certs-strip { grid-template-columns: repeat(2, 1fr); }
+      .cert-panel:nth-child(2) { border-right: none; }
+      .cert-panel:nth-child(3) { border-top: 1px solid rgba(255,255,255,0.1); }
+      .cert-panel:nth-child(4) { border-top: 1px solid rgba(255,255,255,0.1); border-right: none; }
+      .seminars-cols { grid-template-columns: 1fr; }
+      .seminars-cols .rule-v { display: none; }
+      footer { padding: 1.2rem 1.75rem; flex-direction: column; gap: 0.35rem; text-align: center; }
+      .contact-row { flex-direction: column; }
+    }
+    @media (max-width: 600px) {
+      .hero-photo-caption .caption-name { font-size: clamp(2.5rem, 14vw, 4rem); }
+      .skills-magazine { grid-template-columns: 1fr; }
+      .skill-col { border-right: none !important; }
+      .certs-strip { grid-template-columns: 1fr; }
+      .cert-panel { border-right: none; border-top: 1px solid rgba(255,255,255,0.1); }
+      .cert-panel:first-child { border-top: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav>
+  <a class="nav-issue" href="#">
+    <img src="logo.png" alt="Jorich Logo" />
+  </a>
+  <button class="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#seminars">Training</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
+<section id="hero">
+
+  <!-- Top strip -->
+  <div class="hero-topstrip">
+    <span class="ts-left">IT Student &amp; Project Manager — PLV · BSIT · 2026</span>
+    <div class="ts-right">
+      <span><b>Location</b> — Valenzuela City, PH</span>
+      <span><b>Status</b> — Open to Opportunities</span>
+      <span><b>Thesis</b> — iDetect OCR</span>
+    </div>
+  </div>
+
+  <!-- Big type block -->
+  <div class="hero-type-block">
+
+    <!-- Row 1: JORICH -->
+    <div class="hero-row">
+      <span class="big-word">JOR</span>
+      <div class="hero-photo-slot">
+        <img src="profile.png" alt="Jorich Maricar Enoria" />
+      </div>
+      <span class="big-word">ICH</span>
+      <div class="row-spacer"></div>
+      <span class="row-label">IT Student</span>
+    </div>
+
+    <!-- Row 2: MARICAR -->
+    <div class="hero-row">
+      <span class="big-word outline">MARI</span>
+      <span class="big-word red">CAR</span>
+      <div class="row-spacer"></div>
+      <span class="row-label">PLV · BSIT</span>
+    </div>
+
+    <!-- Row 3: C. Enoria italic -->
+    <div class="hero-row">
+      <span class="serif-word">C. Enoria</span>
+      <div class="row-spacer"></div>
+      <span class="row-label">2026</span>
+    </div>
+
+  </div>
+
+  <!-- Bottom info bar -->
+  <div class="hero-infobar">
+    <div class="ib-cell">
+      <span class="label">Role</span>
+      <p>Documentation Lead &amp; Project Manager</p>
+    </div>
+    <div class="ib-rule"></div>
+    <div class="ib-cell">
+      <span class="label">School</span>
+      <p>Pamantasan ng Lungsod ng Valenzuela</p>
+    </div>
+    <div class="ib-rule"></div>
+    <div class="ib-cell">
+      <span class="label">Focus</span>
+      <p>Documentation · QA · Systems That Matter</p>
+    </div>
+    <div class="ib-rule"></div>
+    <div class="ib-ctas">
+      <a href="#projects" class="btn-fill">View My Work</a>
+      <a href="#contact" class="btn-ghost">Get In Touch</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
+<section id="about">
+  <div class="section-masthead fade-in">
+    <span class="section-no">01</span>
+    <h2 class="display">Who I Am</h2>
+    <span class="section-label-right">About Me</span>
+  </div>
+  <div class="about-layout fade-in">
+    <div class="about-sidebar">
+      <div class="about-photo">
+        <img src="whoami.png" alt="About Maricar" />
+      </div>
+      <blockquote class="about-pull">"Detail-oriented and always ready to lead."</blockquote>
+      <div class="about-info-list">
+        <div class="item"><span class="k">Location</span><span class="v">Valenzuela City, PH</span></div>
+        <div class="item"><span class="k">School</span><span class="v">PLV – BSIT</span></div>
+        <div class="item"><span class="k">Email</span><span class="v">enoria.jorich52@gmail.com</span></div>
+        <div class="item"><span class="k">Graduating</span><span class="v">2027</span></div>
+      </div>
+    </div>
+    <div class="rule-v"></div>
+    <div class="about-body">
+      <p class="about-dropcap">
+        I'm a third-year BS Information Technology student at Pamantasan ng Lungsod ng Valenzuela, driven by a passion for creating organized, reliable, and meaningful technology solutions.
+      </p>
+      <p>
+        My strengths lie in documentation, quality assurance, and project management — having led multiple group projects as Project Manager, I coordinated timelines, delegated tasks, and ensured smooth delivery using tools like Jira.
+      </p>
+      <p>
+        Currently, I serve as Documentation Lead for my capstone thesis <em>iDetect</em>, an OCR-based ID verification system designed to support fraud detection and verification processes. In this role, I gained experience in technical documentation, stakeholder communication, and translating ideas into structured and practical solutions.
+      </p>
+      <p>
+        Beyond academics, I'm a member of the Valenzuela Information Technology Society (VITS) under the Logistics Committee, where I contribute to event coordination and organizational activities. I naturally gravitate toward documentation and structured work, because organization, accuracy, and attention to detail matter.
+      </p>
+      <p>
+        I value punctuality and believe good systems and strong teamwork start with proper planning and clear communication. Outside of technology, I enjoy singing, which gives me a creative outlet and balance alongside academic and project work.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SKILLS ═══════════════════════════════ -->
+<section id="skills">
+  <div class="section-masthead fade-in">
+    <span class="section-no">02</span>
+    <h2 class="display">Core Skills</h2>
+    <span class="section-label-right">What I Do</span>
+  </div>
+  <div class="skills-magazine fade-in">
+    <div class="skill-col">
+      <span class="skill-col-icon">📄</span>
+      <div class="skill-col-title">Documentation &amp; QA</div>
+      <p class="skill-col-desc">Clear documentation and reliable test planning that helps teammates move faster.</p>
+      <div class="skill-col-tags">
+        <span>MS Word</span><span>Excel</span><span>PowerPoint</span><span>Canva</span><span>Tech Writing</span><span>Test Cases</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <span class="skill-col-icon">📋</span>
+      <div class="skill-col-title">Project Management</div>
+      <p class="skill-col-desc">Keeping teams aligned with clear goals, deadlines, and communication.</p>
+      <div class="skill-col-tags">
+        <span>Jira</span><span>Sprint Planning</span><span>Team Lead</span><span>Stakeholders</span><span>Milestones</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <span class="skill-col-icon">💻</span>
+      <div class="skill-col-title">Programming</div>
+      <p class="skill-col-desc">Building simple, practical solutions with clean front-end code.</p>
+      <div class="skill-col-tags">
+        <span>Java</span><span>HTML</span><span>CSS</span><span>JavaScript</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <span class="skill-col-icon">🌐</span>
+      <div class="skill-col-title">Networking</div>
+      <p class="skill-col-desc">Practical network setup and troubleshooting with Cisco fundamentals.</p>
+      <div class="skill-col-tags">
+        <span>Cisco NetAcad</span><span>Network Basics</span><span>Troubleshooting</span><span>Security</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <span class="skill-col-icon">🤝</span>
+      <div class="skill-col-title">Soft Skills</div>
+      <p class="skill-col-desc">Adaptable team collaboration and professional communication.</p>
+      <div class="skill-col-tags">
+        <span>Adaptable</span><span>Detail-Oriented</span><span>Multi-tasking</span><span>Organized</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <span class="skill-col-icon">🎨</span>
+      <div class="skill-col-title">Design &amp; Wireframing</div>
+      <p class="skill-col-desc">User-focused interface designs and wireframes.</p>
+      <div class="skill-col-tags">
+        <span>Figma</span><span>Wireframing</span><span>UI Design</span><span>Prototyping</span>
+      </div>
+    </div>
+    <div class="skill-col">
+      <span class="skill-col-icon">🏛️</span>
+      <div class="skill-col-title">Organization</div>
+      <p class="skill-col-desc">Planning, logistics, and structure for events and org activities.</p>
+      <div class="skill-col-tags">
+        <span>VITS Logistics</span><span>Events</span><span>Community</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PROJECTS ═══════════════════════════════ -->
+<section id="projects">
+  <div class="section-masthead fade-in">
+    <span class="section-no">03</span>
+    <h2 class="display">Projects</h2>
+    <span class="section-label-right">My Work</span>
+  </div>
+
+  <!-- Featured -->
+  <div class="project-featured fade-in">
+    <div class="proj-img">
+      <img src="idetect.jpg" alt="iDetect" />
+    </div>
+    <div class="rule-v"></div>
+    <div class="project-featured-body">
+      <div class="proj-meta">
+        <div class="proj-no">01</div>
+        <span class="proj-role-tag">Documentation Lead</span>
+        <h3>iDetect – OCR-Based Discount ID Verification</h3>
+        <p>Multi-portal web app detecting fraudulent Senior Citizen &amp; PWD IDs using Tesseract OCR, OpenCV, and fuzzy text matching. Conducted stakeholder interviews with OSCA and PDAO offices. Capstone Thesis, 2026–Present.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">OCR</span><span class="proj-tag">OpenCV</span><span class="proj-tag">Tesseract</span><span class="proj-tag">Documentation</span>
+        </div>
+      </div>
+      <div>
+        <a href="https://youtu.be/PBg_5loQwUg" target="_blank" rel="noreferrer" class="proj-link">Watch walkthrough ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row of 3 -->
+  <div class="projects-row fade-in">
+    <div class="project-cell">
+      <div class="proj-img"><img src="piso.jpg" alt="Piso Politiko" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag">Project Manager</span>
+        <h3>Piso Politiko – Hybrid Game</h3>
+        <p>Board-digital game where players compete as politicians managing Coins and Reputation. Managed timelines via Jira. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">Jira</span><span class="proj-tag">Game Design</span><span class="proj-tag">PM</span></div>
+        <a href="https://www.youtube.com/watch?v=ww4mUkbBn_o" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Watch ad video ↗</a>
+      </div>
+    </div>
+    <div class="project-cell">
+      <div class="proj-img"><img src="SOTP.png" alt="Shadow of the Past" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag">Project Manager</span>
+        <h3>Shadow of the Past – Narrative Game</h3>
+        <p>Psychological game following a student revisiting his flood-stricken school, confronting trauma through player choices. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">Jira</span><span class="proj-tag">Narrative</span><span class="proj-tag">PM</span></div>
+        <a href="https://bakunawa-studios.itch.io/shadow-of-the-past" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Play on itch.io ↗</a>
+      </div>
+    </div>
+    <div class="project-cell">
+      <div class="proj-img"><img src="Catch.png" alt="Buwaya Catch" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag">Project Manager</span>
+        <h3>Buwaya Catch – Arcade Strategy</h3>
+        <p>Arcade game where players control a corrupt politician catching public funds while dodging accountability. 3 unique characters. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">Jira</span><span class="proj-tag">Game Dev</span><span class="proj-tag">PM</span></div>
+        <a href="https://bakunawa-studios.itch.io/buwaya-catch" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Play on itch.io ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row of 4 -->
+  <div class="projects-row-4 fade-in">
+    <div class="project-cell">
+      <div class="proj-img"><img src="portfolio.png" alt="Portfolio" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag" style="background:var(--teal);">Individual</span>
+        <h3>Personal Portfolio Website</h3>
+        <p>Built from scratch using HTML, CSS, and JS. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span><span class="proj-tag">JS</span></div>
+        <a href="https://youtu.be/Z3Q16MXEmT8" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Watch demo ↗</a>
+      </div>
+    </div>
+    <div class="project-cell">
+      <div class="proj-img"><img src="maricopa.png" alt="Maricopa" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag" style="background:var(--teal);">Group Project</span>
+        <h3>Maricopa Restaurant Site &amp; Prediction</h3>
+        <p>Restaurant website + data-driven daily serving prediction module. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">HTML</span><span class="proj-tag">CSS</span><span class="proj-tag">Forecasting</span></div>
+        <a href="https://youtu.be/_pNvUakrliE" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Watch demo ↗</a>
+      </div>
+    </div>
+    <div class="project-cell">
+      <div class="proj-img"><img src="arta.png" alt="ARTA" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag" style="background:var(--teal);">Group Project</span>
+        <h3>ARTA Customer Satisfaction System</h3>
+        <p>Flutter &amp; Supabase app automating ARTA surveys for Valenzuela City. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">Flutter</span><span class="proj-tag">Supabase</span><span class="proj-tag">Mobile</span></div>
+        <a href="https://drive.google.com/drive/folders/1_hptyvoOac_e1Po7ZMrfqROec6cmSO62" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">View presentation ↗</a>
+      </div>
+    </div>
+    <div class="project-cell">
+      <div class="proj-img"><img src="vits.png" alt="VITS IMS" /></div>
+      <div class="project-cell-body">
+        <span class="proj-role-tag" style="background:var(--teal);">Group Project</span>
+        <h3>VITS Inventory Management System</h3>
+        <p>Designed front-end dashboard: product listings, stock controls, responsive admin. 2025.</p>
+        <div class="proj-tags"><span class="proj-tag">Front-End</span><span class="proj-tag">Figma</span><span class="proj-tag">UI</span></div>
+        <a href="https://www.figma.com/design/6x7GltTM7iMddfWnWIwtuw/Event" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">View Figma ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CERTIFICATIONS ═══════════════════════════════ -->
+<section id="certifications">
+  <div class="section-masthead fade-in">
+    <span class="section-no" style="color:rgba(255,255,255,0.3);">04</span>
+    <h2 class="display" style="color:#fff;">Certifications</h2>
+    <span class="section-label-right" style="color:rgba(255,255,255,0.3);">Credentials</span>
+  </div>
+  <div class="certs-strip fade-in">
+    <div class="cert-panel">
+      <div class="cert-no">01</div>
+      <h4>Network Support and Security</h4>
+      <p>Cisco Networking Academy · May 2025</p>
+      <a href="https://www.credly.com/badges/f2a1e239-2611-4c5b-ae2c-ceb93ef86862" target="_blank" rel="noreferrer" class="cert-badge-link">View badge ↗</a>
+    </div>
+    <div class="cert-panel">
+      <div class="cert-no">02</div>
+      <h4>Network Addressing and Basic Troubleshooting</h4>
+      <p>Cisco Networking Academy · May 2025</p>
+      <a href="https://www.credly.com/badges/047918f3-b77b-48cb-86bb-d07c17937478" target="_blank" rel="noreferrer" class="cert-badge-link">View badge ↗</a>
+    </div>
+    <div class="cert-panel">
+      <div class="cert-no">03</div>
+      <h4>Networking Devices and Initial Configuration</h4>
+      <p>Cisco Networking Academy · April 2025</p>
+      <a href="https://www.credly.com/badges/88bc9b0e-d1bb-49f5-8db1-3f06bbf5eee1" target="_blank" rel="noreferrer" class="cert-badge-link">View badge ↗</a>
+    </div>
+    <div class="cert-panel">
+      <div class="cert-no">04</div>
+      <h4>Networking Basics</h4>
+      <p>Cisco Networking Academy · April 2025</p>
+      <a href="https://www.credly.com/badges/f72fb282-b51f-4b1d-8084-7ea94ccffa62" target="_blank" rel="noreferrer" class="cert-badge-link">View badge ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ SEMINARS ═══════════════════════════════ -->
+<section id="seminars">
+  <div class="section-masthead fade-in">
+    <span class="section-no">05</span>
+    <h2 class="display">Seminars &amp; Training</h2>
+    <span class="section-label-right">Learning &amp; Growth</span>
+  </div>
+  <div class="seminars-cols fade-in">
+    <div class="seminars-col">
+      <div class="seminar-entry">
+        <span class="sem-no">01</span>
+        <div>
+          <h4>Game Design and Development</h4>
+          <p>Pamantasan ng Lungsod ng Valenzuela · April 16, 2026 · CEIT Lecture Hall</p>
+        </div>
+      </div>
+      <div class="seminar-entry">
+        <span class="sem-no">02</span>
+        <div>
+          <h4>Launch for your Tech Career: The High Demand Skillset of a Full Stack Web Developer</h4>
+          <p>PLV · April 25, 2024 · PLV Auditorium</p>
+        </div>
+      </div>
+      <div class="seminar-entry">
+        <span class="sem-no">03</span>
+        <div>
+          <h4>IT Developer Life Hacks: Working Smart as a Computer Programmer</h4>
+          <p>PLV · April 20, 2024 · PLV Auditorium</p>
+        </div>
+      </div>
+    </div>
+    <div class="rule-v"></div>
+    <div class="seminars-col">
+      <div class="seminar-entry">
+        <span class="sem-no">04</span>
+        <div>
+          <h4>Fortifying the Future: Navigating the Landscape of Cybersecurity Essentials</h4>
+          <p>PLV · April 20, 2024 · PLV Auditorium</p>
+        </div>
+      </div>
+      <div class="seminar-entry">
+        <span class="sem-no">05</span>
+        <div>
+          <h4>Unlocking Innovation: Navigating Digital Transformation in Today's Landscape</h4>
+          <p>PLV · April 20, 2024 · PLV Auditorium</p>
+        </div>
+      </div>
+      <div class="seminar-entry">
+        <span class="sem-no">06</span>
+        <div>
+          <h4>Securing Connections: Strategies for Cybersecurity and Network Operations</h4>
+          <p>PLV · April 20, 2024 · PLV Auditorium</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
+<section id="contact">
+  <div class="contact-inner fade-in">
+    <span class="contact-kicker">Let's Connect</span>
+    <h2 class="contact-headline">Get<br><em>In Touch</em></h2>
+    <p class="contact-sub">Whether you're looking for an IT intern, a documentation lead, or a project manager — I'd love to hear from you.</p>
+    <div class="contact-row">
+      <div class="contact-item">
+        <span class="k">Email</span>
+        <a href="mailto:enoria.jorich52@gmail.com">enoria.jorich52@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="k">Phone</span>
+        <a href="tel:09125436609">0912 543 6609</a>
+      </div>
+      <div class="contact-item">
+        <span class="k">Location</span>
+        <a>Valenzuela City, Philippines</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
+<footer>
+  <span>JMC ENORIA</span>
+  <span>© 2026 · Valenzuela City, Philippines</span>
+  <span>BSIT · PLV</span>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lightbox-overlay" class="lightbox-overlay">
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close">✕</button>
+    <img class="lightbox-img" src="" alt="" />
+    <div class="lightbox-caption"></div>
+  </div>
+</div>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 60}ms`;
+    observer.observe(el);
+  });
+
+  // Hamburger
+  const ham = document.querySelector('.hamburger');
+  const nav = document.querySelector('.nav-links');
+  if (ham) {
+    ham.addEventListener('click', () => { ham.classList.toggle('active'); nav.classList.toggle('active'); });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { ham.classList.remove('active'); nav.classList.remove('active'); }));
+    document.addEventListener('click', e => { if (!e.target.closest('nav')) { ham.classList.remove('active'); nav.classList.remove('active'); } });
+  }
+
+  // Lightbox
+  const overlay = document.getElementById('lightbox-overlay');
+  const lbImg = overlay.querySelector('.lightbox-img');
+  const lbCap = overlay.querySelector('.lightbox-caption');
+  const lbClose = overlay.querySelector('.lightbox-close');
+  function openLb(src, alt) { lbImg.src = src; lbCap.textContent = alt || ''; overlay.classList.add('visible'); document.body.style.overflow = 'hidden'; }
+  function closeLb() { overlay.classList.remove('visible'); document.body.style.overflow = ''; lbImg.src = ''; }
+  document.querySelectorAll('img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', e => { e.preventDefault(); openLb(img.src, img.alt); });
+  });
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeLb(); });
+  lbClose.addEventListener('click', closeLb);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
