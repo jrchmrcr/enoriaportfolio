@@ -541,33 +541,39 @@
     .cert-panel:hover { background: rgba(255,255,255,0.04); }
     .cert-no {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
-      color: rgba(255,255,255,0.08);
+      font-size: 3rem;
+      color: var(--red);
       line-height: 1;
     }
     .cert-panel h4 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      font-weight: 400;
-      line-height: 1.35;
+      font-size: 1.35rem;
+      font-weight: 500;
+      line-height: 1.25;
       color: var(--white);
     }
-    .cert-panel p { font-size: 0.72rem; color: rgba(255,255,255,0.4); line-height: 1.5; }
+    .cert-panel p { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
+    .cert-panel { border-top: 3px solid transparent; }
+    .cert-panel:hover { border-top-color: var(--red); background: rgba(255,255,255,0.06); }
     .cert-badge-link {
-      display: inline-block;
-      font-size: 0.62rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.74rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
+      color: #fff;
       text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 0.2rem;
+      background: var(--red);
+      border: 1px solid var(--red);
+      padding: 0.75rem 1.1rem;
       margin-top: auto;
-      transition: color 0.2s, border-color 0.2s;
+      transition: background 0.2s, color 0.2s, gap 0.2s, transform 0.2s;
       align-self: flex-start;
     }
-    .cert-badge-link:hover { color: var(--white); border-bottom-color: var(--white); }
+    .cert-badge-link:hover { background: #fff; color: var(--black); border-color: #fff; gap: 0.95rem; transform: translateY(-2px); }
+    .cert-badge-link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
     /* ──────────────────────── SEMINARS ──────────────────────── */
     #seminars { background: var(--off); }
@@ -974,6 +980,167 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 .flow div,.bridge p{font-size:.88rem}
 @media(max-width:800px){.co-card{padding:1.25rem}.co-card p{font-size:1.05rem}.ojt-about img{box-shadow:6px 6px 0 var(--red)}}
 
+
+#featured{background:var(--off);scroll-margin-top:76px;padding-top:0;padding-bottom:0}
+#featured .fb-in{max-width:1200px;margin:0 auto;padding:0 3rem}
+#featured .feature{margin:0 -3rem 0}
+@media(max-width:700px){#featured .fb-in{padding:0 1.25rem}#featured .feature{margin:0 -1.25rem}}
+/* People: one full-width banner, then three photos in one row at the same height (no cropping) */
+.people{grid-template-columns:minmax(0,1.34fr) minmax(0,1fr) minmax(0,.96fr);gap:1.25rem;align-items:start}
+.people figure:first-child{grid-column:1/-1}
+.people figure:not(:first-child) img{width:100%;height:auto;max-height:none;object-fit:cover;object-position:center}
+.people figure:nth-child(2) img{aspect-ratio:1.34/1}
+.people figure:nth-child(3) img{aspect-ratio:1/1}
+.people figure:nth-child(4) img{aspect-ratio:.96/1}
+@media(max-width:900px){.people{grid-template-columns:minmax(0,1fr) minmax(0,.96fr)}.people figure:nth-child(2){grid-column:1/-1}}
+@media(max-width:600px){.people{grid-template-columns:1fr}.people figure:nth-child(2){grid-column:auto}}
+.skl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem;align-items:start}
+.skl-col{background:var(--white);border:1px solid var(--black);box-shadow:6px 6px 0 var(--red)}
+.skl-head{display:flex;align-items:center;gap:.8rem;background:var(--black);color:#fff;padding:.9rem 1.1rem}
+.skl-ico{font-size:1.5rem;line-height:1}
+.skl-head h4{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.5rem;letter-spacing:.04em;line-height:1}
+.skl-head small{display:block;font-size:.7rem;letter-spacing:.04em;color:rgba(255,255,255,.7);margin-top:.2rem}
+.skl-head b{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2.2rem;line-height:1;color:var(--red)}
+.skl-col ul{list-style:none}
+.skl-col li{display:flex;flex-direction:column;gap:.15rem;padding:.8rem 1.1rem .8rem 2.2rem;border-bottom:1px solid var(--rule);position:relative;transition:background .2s,padding .2s}
+.skl-col li:last-child{border-bottom:none}
+.skl-col li:before{content:"";position:absolute;left:1.1rem;top:1.2rem;width:7px;height:7px;background:var(--red);transition:transform .2s}
+.skl-col li strong{font-size:.95rem;font-weight:700}
+.skl-col li span{font-size:.82rem;line-height:1.45;color:var(--muted)}
+.skl-col li:hover{background:var(--off);padding-left:2.5rem}
+.skl-col li:hover:before{transform:rotate(45deg) scale(1.2)}
+@media(max-width:1000px){.skl{grid-template-columns:1fr}}
+/* ===== Portfolio identity pass ===== */
+.hero-type-block{position:relative}
+.hero-portfolio{position:absolute;top:2.2rem;right:6rem;width:min(30vw,420px);background:var(--white);border:1px solid var(--black);box-shadow:8px 8px 0 var(--black);padding:1.1rem 1.3rem 1.2rem;z-index:2;animation:rise .9s .35s cubic-bezier(.2,.8,.2,1) both}
+.hp-head{display:flex;justify-content:space-between;align-items:center;gap:.8rem;margin-bottom:.8rem}
+.hp-badge{background:var(--red);color:#fff;font-size:.68rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:.3rem .65rem}
+.hp-ed{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hp-title{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(1.3rem,2vw,1.75rem);line-height:1.1;margin-bottom:.9rem}
+.hp-title em{color:var(--red)}
+.hp-list{list-style:none;border-top:1px solid var(--rule)}
+.hp-list a{display:grid;grid-template-columns:1.8rem 1fr auto;gap:.5rem;align-items:baseline;padding:.55rem .2rem;border-bottom:1px solid var(--rule);color:var(--black);text-decoration:none;font-size:.82rem;font-weight:600;transition:background .2s,padding .2s,color .2s}
+.hp-list i{font-style:normal;font-family:'Bebas Neue',sans-serif;color:var(--red);font-size:1rem;letter-spacing:.05em}
+.hp-list b{font-weight:500;font-size:.68rem;color:var(--muted);text-align:right}
+.hp-list a:hover{background:var(--off);padding-left:.6rem;color:var(--red)}
+.hp-cta{display:flex;justify-content:space-between;margin-top:.9rem;background:var(--black);color:#fff;text-decoration:none;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:.75rem 1rem;transition:background .2s}
+.hp-cta span{display:inline-block;animation:bob 1.4s ease-in-out infinite}
+.hp-cta:hover{background:var(--red)}
+@keyframes bob{50%{transform:translateY(5px)}}
+.hero-ticker{overflow:hidden;background:var(--black);color:#fff;border-top:1px solid var(--black);white-space:nowrap}
+.ht-track{display:inline-flex;animation:htscroll 38s linear infinite}
+@keyframes htscroll{to{transform:translateX(-50%)}}
+.ht-track span{font-family:'Bebas Neue',sans-serif;letter-spacing:.12em;font-size:1.15rem;padding:.55rem 1.6rem;position:relative}
+.ht-track span:after{content:"✦";color:var(--red);position:absolute;right:-.35rem}
+@media(max-width:1100px){.hero-portfolio{position:static;width:auto;margin:1.25rem 0;box-shadow:5px 5px 0 var(--black)}.hero-type-block{padding-bottom:0}}
+@media(prefers-reduced-motion:reduce){.hero-portfolio,.hp-cta span,.ht-track{animation:none}}
+
+/* ===== Polish pass: about, skills, what I did ===== */
+.about-glance{margin-top:2.2rem;padding-top:1.4rem;border-top:1px solid var(--rule)}
+.ag-label{display:block;font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:.9rem}
+.ag-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem}
+.ag-grid div{background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--red);padding:.9rem 1rem;display:grid;grid-template-columns:auto 1fr;column-gap:.7rem;align-items:center;transition:transform .25s,box-shadow .25s}
+.ag-grid div:hover{transform:translateY(-3px);box-shadow:4px 4px 0 var(--black)}
+.ag-grid i{font-style:normal;font-size:1.4rem;grid-row:span 2}
+.ag-grid b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.05rem;letter-spacing:.06em}
+.ag-grid span{font-size:.8rem;line-height:1.4;color:var(--muted)}
+.ag-line{font-family:'Cormorant Garamond',serif;font-size:1.7rem;margin:1.4rem 0 0!important;line-height:1.1}
+.ag-line em{color:var(--red)}
+@media(max-width:600px){.ag-grid{grid-template-columns:1fr}}
+.skill-col::after{content:attr(data-n);position:absolute;top:.6rem;right:.9rem;font-family:'Bebas Neue',sans-serif;font-size:2.6rem;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(13,12,11,.18);transition:-webkit-text-stroke-color .3s}
+.skill-col:hover::after{-webkit-text-stroke-color:var(--red)}
+.skill-col-icon{width:2.8rem;height:2.8rem;display:grid;place-items:center;background:var(--white);border:1px solid var(--black);box-shadow:3px 3px 0 var(--red);font-size:1.3rem;transition:transform .3s}
+.skill-col:hover .skill-col-icon{transform:rotate(-6deg) scale(1.08)}
+.skill-col-tags{flex-direction:row;flex-wrap:wrap;gap:.4rem}
+.skill-col-tags span{border:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.3rem .55rem;background:var(--white);transition:background .2s,color .2s,border-color .2s}
+.skill-col:hover .skill-col-tags span{border-color:var(--black)}
+.skill-col-tags span:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.ojt-track{position:relative;transition:background .25s,transform .25s}
+.ojt-track:before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:var(--red);transform:scaleX(.18);transform-origin:left;transition:transform .4s}
+.ojt-track:hover:before{transform:scaleX(1)}
+.ojt-track:hover{background:var(--off)}
+.ot-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.9rem}
+.ot-ico{width:2.4rem;height:2.4rem;display:grid;place-items:center;font-size:1.15rem;background:var(--off);border:1px solid var(--black);box-shadow:3px 3px 0 var(--red)}
+.ot-n{font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:var(--black);padding:.25rem .55rem}
+.ojt-track h4{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.45rem;letter-spacing:.04em}
+
+/* ===== Polish pass 2: clickable skills, bridge, chips, gallery ===== */
+.skill-col{cursor:pointer}
+.skill-more{display:flex;justify-content:space-between;align-items:center;margin-top:1.1rem;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red)}
+.skill-more b{font-size:1rem;line-height:1;width:1.4rem;height:1.4rem;display:grid;place-items:center;border:1px solid var(--red);transition:background .2s,color .2s}
+.skill-col:hover .skill-more b,.skill-col.active .skill-more b{background:var(--red);color:#fff}
+.skill-col.active{background:var(--white)}
+.skill-col.active:before{transform:scaleX(1)}
+.skill-col:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+.skill-detail{position:relative;display:grid;grid-template-columns:auto 1fr;gap:1.6rem;margin-top:1.2rem;padding:1.8rem 2rem;background:var(--white);border:1px solid var(--black);box-shadow:8px 8px 0 var(--red);animation:sdIn .35s ease both}
+.skill-detail[hidden]{display:none}
+@keyframes sdIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.sd-ico{font-size:2.4rem;width:4.4rem;height:4.4rem;display:grid;place-items:center;background:var(--off);border:1px solid var(--black)}
+.sd-kick{font-size:.65rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red)}
+.sd-main h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2.2rem;letter-spacing:.03em;line-height:1;margin:.2rem 0 .5rem}
+.sd-lead{font-family:'Cormorant Garamond',serif;font-size:1.4rem;line-height:1.25;margin-bottom:1rem;max-width:60ch}
+.sd-main ul{list-style:none;display:grid;gap:.5rem;font-size:.9rem;line-height:1.5;max-width:70ch}
+.sd-main li{padding-left:1.1rem;position:relative}
+.sd-main li:before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;background:var(--red)}
+.sd-links{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.2rem}
+.sd-links a{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--black);border:1px solid var(--black);padding:.5rem .8rem;transition:background .2s,color .2s}
+.sd-links a:hover{background:var(--black);color:#fff}
+.sd-close{position:absolute;top:.8rem;right:.9rem;background:none;border:1px solid var(--rule);width:2rem;height:2rem;cursor:pointer;font-size:.8rem;color:var(--black);transition:background .2s,color .2s}
+.sd-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+@media(max-width:600px){.skill-detail{grid-template-columns:1fr;padding:1.4rem}.sd-main h3{font-size:1.8rem}}
+.bridge div{position:relative;transition:background .25s}
+.bridge div:hover{background:var(--off)}
+.bridge b{font-size:1.6rem}
+.bridge-arrow{display:grid;place-items:center;width:1.7rem;height:1.7rem;margin:.2rem 0 .7rem;background:var(--red);color:#fff;font-size:.95rem;font-weight:700;transition:transform .3s}
+.bridge div:hover .bridge-arrow{transform:translateY(4px)}
+.bridge p{border-top:none;padding-top:0}
+.bridge .at{display:inline-block;font-style:normal;font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:var(--black);color:#fff;padding:.2rem .5rem;margin-right:.5rem}
+.chips span{position:relative;padding-left:1.5rem;background:var(--white);transition:background .2s,color .2s,transform .2s,box-shadow .2s;cursor:default}
+.chips span:before{content:"";position:absolute;left:.65rem;top:50%;width:6px;height:6px;margin-top:-3px;background:var(--red);transition:background .2s}
+.chips span:hover{background:var(--black);color:#fff;transform:translate(-2px,-2px);box-shadow:3px 3px 0 var(--red)}
+.chips span:hover:before{background:#fff}
+.gal{counter-reset:shot}
+.gal figure{position:relative;counter-increment:shot;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.gal figure:hover{transform:translateY(-4px);box-shadow:6px 6px 0 var(--red)}
+.gal figure:before{content:"0" counter(shot);position:absolute;top:.6rem;left:.6rem;z-index:2;background:var(--black);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;padding:.1rem .5rem}
+.gal figure img{transition:transform .5s}
+.gal figure:hover img{transform:scale(1.04)}
+.gal figcaption b{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.15rem;letter-spacing:.04em;color:var(--red);display:block;margin-top:.2rem}
+
+/* ===== Polish pass 3 ===== */
+#about-vits,#ojt-did,#ojt-sample,#ojt-it,#shot-orgchart,[id^="proj-"],#featured,#reflections,#certifications{scroll-margin-top:76px}
+.jump-flash{animation:jflash 2.4s ease}
+@keyframes jflash{0%,60%{outline:3px solid var(--red);outline-offset:6px;background-color:rgba(192,57,43,.10)}100%{outline:3px solid transparent;outline-offset:14px}}
+.hero-aim{margin-left:auto;margin-right:.3rem;width:min(30vw,420px);box-shadow:8px 8px 0 var(--red);border:1px solid var(--black);border-left:3px solid var(--red);padding:1rem 1.2rem;border-left:3px solid var(--red);background:rgba(255,255,255,.55);align-self:center;animation:rise .9s .5s cubic-bezier(.2,.8,.2,1) both}
+.ha-label{display:block;font-size:.62rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem}
+.ha-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,1.9vw,1.7rem);line-height:1.15;margin-bottom:.8rem}
+.ha-text em{color:var(--red)}
+.ha-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.ha-chips span{font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--black);padding:.25rem .55rem;background:var(--white)}
+.ha-link{display:inline-flex;gap:.6rem;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--black);text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:.15rem;transition:color .2s,gap .2s}
+.ha-link:hover{color:var(--red);gap:1rem}
+.hero-aim + .row-spacer{display:none}
+.hero-aim{background:var(--white)}
+@media(max-width:1000px){.hero-aim{display:none}}
+@media(prefers-reduced-motion:reduce){.hero-aim{animation:none}}
+.rf-it{margin-top:5rem;padding-top:3rem;border-top:1px solid rgba(255,255,255,.2)}
+.rf-it-title{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2.4rem,5vw,4rem);line-height:1;letter-spacing:.02em;color:#fff;margin:.5rem 0 1rem}
+.rf-it-title em{font-family:'Cormorant Garamond',serif;color:var(--red);font-weight:400}
+.rf-it-lead{font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.45;color:rgba(255,255,255,.82);max-width:62ch}
+.rf-map{margin-top:2.5rem;border-top:1px solid rgba(255,255,255,.2)}
+.rf-row{display:grid;grid-template-columns:1fr auto 1.15fr;gap:1.5rem;align-items:start;padding:1.5rem .5rem;border-bottom:1px solid rgba(255,255,255,.14);transition:background .3s}
+.rf-row:hover{background:rgba(192,57,43,.08)}
+.rf-row small{margin-bottom:.4rem;color:rgba(255,255,255,.5)}
+.rf-row .r small{color:var(--red)}
+.rf-row p{font-size:.88rem;line-height:1.6;color:rgba(255,255,255,.75)}
+.rf-row .l p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.4;color:rgba(255,255,255,.85)}
+.rf-row .ar{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--red);line-height:1;transition:transform .3s}
+.rf-row:hover .ar{transform:translateX(6px)}
+.rf-row h5{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.7rem;letter-spacing:.03em;color:#fff;margin-bottom:.3rem;line-height:1}
+.rf-shift{margin-top:2.5rem;padding:1.8rem 2rem;border:1px solid var(--red);background:rgba(192,57,43,.1)}
+.rf-shift p{font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.4;color:#fff;margin-top:.4rem}
+.rf-shift em{color:var(--red)}
+@media(max-width:760px){.rf-row{grid-template-columns:1fr;gap:.6rem}.rf-row .ar{transform:rotate(90deg);width:1.4rem}}
 </style>
 </head>
 <body>
@@ -1003,7 +1170,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 
   <!-- Top strip -->
   <div class="hero-topstrip">
-    <span class="ts-left">IT Student &amp; Project Manager — PLV · BSIT · 2026</span>
+    <span class="ts-left">Portfolio 2026 — IT Student &amp; Project Manager — PLV · BSIT</span>
     <div class="ts-right">
       <span><b>Location</b> — Valenzuela City, PH</span>
       <span class="live"><b>Status</b> — Open to Opportunities</span>
@@ -1013,6 +1180,23 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 
   <!-- Big type block -->
   <div class="hero-type-block">
+
+    <!-- Portfolio index card -->
+    <aside class="hero-portfolio" aria-label="Portfolio contents">
+      <div class="hp-head">
+        <span class="hp-badge">Portfolio</span>
+        <span class="hp-ed">2026 Edition · Vol. 01</span>
+      </div>
+      <h2 class="hp-title">Selected work, <em>case studies</em> &amp; proof of impact.</h2>
+      <ol class="hp-list">
+        <li><a href="#projects"><i>01</i><span>Projects &amp; Case Studies</span><b>iDetect OCR · Piso Politiko +</b></a></li>
+        <li><a href="#ojt"><i>02</i><span>OJT at Toyota Valenzuela</span><b>60 workdays</b></a></li>
+        <li><a href="#featured"><i>03</i><span>Featured Work</span><b>Parts ad videos</b></a></li>
+        <li><a href="#skills"><i>04</i><span>Skills &amp; Tools</span><b>Docs · QA · PM</b></a></li>
+        <li><a href="#certifications"><i>05</i><span>Certifications &amp; Training</span><b>Cisco + seminars</b></a></li>
+      </ol>
+      <a href="#about" class="hp-cta">Browse the portfolio <span>↓</span></a>
+    </aside>
 
     <!-- Row 1: JORICH -->
     <div class="hero-row">
@@ -1036,6 +1220,12 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
     <!-- Row 3: C. Enoria italic -->
     <div class="hero-row">
       <span class="serif-word">C. Enoria</span>
+      <div class="hero-aim">
+        <span class="ha-label">Where I'm headed</span>
+        <p class="ha-text">Documentation, quality assurance &amp; <em>systems support.</em></p>
+        <div class="ha-chips"><span>Documentation</span><span>QA</span><span>Systems Support</span></div>
+        <a href="#contact" class="ha-link">Let's work together <span>→</span></a>
+      </div>
       <div class="row-spacer"></div>
       <span class="row-label">2026</span>
     </div>
@@ -1077,6 +1267,14 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
     </div>
   </div>
 
+  <!-- Portfolio ticker -->
+  <div class="hero-ticker" aria-hidden="true">
+    <div class="ht-track">
+      <span>Portfolio 2026</span><span>Documentation</span><span>Project Management</span><span>Quality Assurance</span><span>Case Studies</span><span>Toyota Valenzuela OJT</span><span>iDetect OCR Thesis</span><span>Scroll to explore ↓</span>
+      <span>Portfolio 2026</span><span>Documentation</span><span>Project Management</span><span>Quality Assurance</span><span>Case Studies</span><span>Toyota Valenzuela OJT</span><span>iDetect OCR Thesis</span><span>Scroll to explore ↓</span>
+    </div>
+  </div>
+
 </section>
 
 <!-- ═══════════════════════════════ ABOUT ═══════════════════════════════ -->
@@ -1110,12 +1308,22 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
       <p>
         Currently, I serve as <mark class="hl">Documentation Lead</mark> for my capstone thesis <em>iDetect</em>, an OCR-based ID verification system designed to support fraud detection and verification processes. In this role, I gained experience in technical documentation, stakeholder communication, and translating ideas into structured and practical solutions.
       </p>
-      <p>
+      <p id="about-vits">
         Beyond academics, I'm a member of the Valenzuela Information Technology Society (VITS) under the Logistics Committee, where I contribute to event coordination and organizational activities. I naturally gravitate toward documentation and structured work, because organization, accuracy, and attention to detail matter.
       </p>
       <p>
         I value punctuality and believe good systems and strong teamwork start with proper planning and clear communication. Outside of technology, I enjoy singing, which gives me a creative outlet and balance alongside academic and project work.
       </p>
+      <div class="about-glance">
+        <span class="ag-label">At a glance</span>
+        <div class="ag-grid">
+          <div><i>🎯</i><b>Now</b><span>Documentation Lead for the iDetect capstone</span></div>
+          <div><i>🧭</i><b>Leading</b><span>Project Manager on multiple group projects</span></div>
+          <div><i>🤝</i><b>Giving back</b><span>VITS Logistics Committee member</span></div>
+          <div><i>🎤</i><b>Off-duty</b><span>Singing, my creative reset</span></div>
+        </div>
+        <p class="ag-line">Good systems start with <em>good planning.</em></p>
+      </div>
     </div>
   </div>
 </section>
@@ -1128,66 +1336,89 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
     <span class="section-label-right">What I Do</span>
   </div>
   <div class="skills-magazine fade-in">
-    <div class="skill-col">
+    <div class="skill-col" data-n="01" data-skill="0" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">📄</span>
       <div class="skill-col-title">Documentation &amp; QA</div>
       <p class="skill-col-desc">Clear documentation and reliable test planning that helps teammates move faster.</p>
       <div class="skill-col-tags">
         <span>MS Word</span><span>Excel</span><span>PowerPoint</span><span>Canva</span><span>Tech Writing</span><span>Test Cases</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
-    <div class="skill-col">
+    <div class="skill-col" data-n="02" data-skill="1" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">📋</span>
       <div class="skill-col-title">Project Management</div>
       <p class="skill-col-desc">Keeping teams aligned with clear goals, deadlines, and communication.</p>
       <div class="skill-col-tags">
         <span>Jira</span><span>Sprint Planning</span><span>Team Lead</span><span>Stakeholders</span><span>Milestones</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
-    <div class="skill-col">
+    <div class="skill-col" data-n="03" data-skill="2" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">💻</span>
       <div class="skill-col-title">Programming</div>
       <p class="skill-col-desc">Building simple, practical solutions with clean front-end code.</p>
       <div class="skill-col-tags">
         <span>Java</span><span>HTML</span><span>CSS</span><span>JavaScript</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
-    <div class="skill-col">
+    <div class="skill-col" data-n="04" data-skill="3" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">🌐</span>
       <div class="skill-col-title">Networking</div>
       <p class="skill-col-desc">Practical network setup and troubleshooting with Cisco fundamentals.</p>
       <div class="skill-col-tags">
         <span>Cisco NetAcad</span><span>Network Basics</span><span>Troubleshooting</span><span>Security</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
-    <div class="skill-col">
+    <div class="skill-col" data-n="05" data-skill="4" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">🤝</span>
       <div class="skill-col-title">Soft Skills</div>
       <p class="skill-col-desc">Adaptable team collaboration and professional communication.</p>
       <div class="skill-col-tags">
         <span>Adaptable</span><span>Detail-Oriented</span><span>Multi-tasking</span><span>Organized</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
-    <div class="skill-col">
+    <div class="skill-col" data-n="06" data-skill="5" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">🎨</span>
       <div class="skill-col-title">Design &amp; Wireframing</div>
       <p class="skill-col-desc">User-focused interface designs and wireframes.</p>
       <div class="skill-col-tags">
         <span>Figma</span><span>Wireframing</span><span>UI Design</span><span>Prototyping</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
-    <div class="skill-col">
+    <div class="skill-col" data-n="07" data-skill="6" role="button" tabindex="0" aria-expanded="false" aria-controls="skill-detail">
       <span class="skill-col-icon">🏛️</span>
       <div class="skill-col-title">Organization</div>
       <p class="skill-col-desc">Planning, logistics, and structure for events and org activities.</p>
       <div class="skill-col-tags">
         <span>VITS Logistics</span><span>Events</span><span>Community</span>
       </div>
+      <span class="skill-more">Read more <b>+</b></span>
     </div>
   </div>
+  <div class="skill-detail" id="skill-detail" hidden></div>
 </section>
 
 <!-- ═══════════════════════════════ PROJECTS ═══════════════════════════════ -->
+
+<!-- ═════════ FEATURED WORK ═════════ -->
+<section id="featured">
+  <div class="fb-in">
+    <div class="feature fade-in">
+  <span class="kick">Featured · Beyond the Job Description</span>
+  <h3>I Was Part of the <em>Parts Advertisement</em></h3>
+  <p class="lede">My internship was not only SAP and spreadsheets. When Toyota Valenzuela's Parts Department produced its parts advertisement, I stepped in front of the camera and took part in it. It was posted on Facebook for customers to see. I treat my work like that: if the team needs it, I show up and do it well.</p>
+  <div class="vids">
+    <div class="vid" data-fb="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1bfJu4w26B%2F&amp;show_text=false&amp;width=340" data-title="Toyota Valenzuela parts advertisement (reel)"><video controls playsinline preload="metadata" poster="ojt-reel-poster.jpg" aria-label="Toyota Valenzuela parts advertisement (reel)"><source src="parts-ad-reel.mp4#t=0.5" type="video/mp4"></video><a href="https://www.facebook.com/share/r/1bfJu4w26B/" target="_blank" rel="noreferrer">Watch on Facebook ↗</a><span>Parts advertisement · Reel</span></div>
+    <div class="vid" data-fb="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F18YpGy4Y2C%2F&amp;show_text=false&amp;width=340" data-title="Toyota Valenzuela parts advertisement (video)"><video controls playsinline preload="metadata" poster="ojt-video-poster.jpg" aria-label="Toyota Valenzuela parts advertisement (video)"><source src="parts-ad-video.mp4#t=0.5" type="video/mp4"></video><a href="https://www.facebook.com/share/v/18YpGy4Y2C/" target="_blank" rel="noreferrer">Watch on Facebook ↗</a><span>Parts advertisement · Video</span></div>
+  </div>
+</div>
+  </div>
+</section>
 
 <!-- ═════════ OJT EXPERIENCE ═════════ -->
 <section id="ojt">
@@ -1204,15 +1435,6 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
       <div><b>Site Supervisor</b><span>Ms. Mianca Rysabelle Bogas</span></div>
       <div><b>Final Day</b><span>November 5, 2026</span></div>
     </div>
-    <div class="feature fade-in" id="featured">
-  <span class="kick">Featured · Beyond the Job Description</span>
-  <h3>I Was Part of the <em>Parts Advertisement</em></h3>
-  <p class="lede">My internship was not only SAP and spreadsheets. When Toyota Valenzuela's Parts Department produced its parts advertisement, I stepped in front of the camera and took part in it. It was posted on Facebook for customers to see. I treat my work like that: if the team needs it, I show up and do it well.</p>
-  <div class="vids">
-    <div class="vid" data-fb="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1bfJu4w26B%2F&amp;show_text=false&amp;width=340" data-title="Toyota Valenzuela parts advertisement (reel)"><video controls playsinline preload="metadata" poster="ojt-reel-poster.jpg" aria-label="Toyota Valenzuela parts advertisement (reel)"><source src="parts-ad-reel.mp4#t=0.5" type="video/mp4"></video><a href="https://www.facebook.com/share/r/1bfJu4w26B/" target="_blank" rel="noreferrer">Watch on Facebook ↗</a><span>Parts advertisement · Reel</span></div>
-    <div class="vid" data-fb="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F18YpGy4Y2C%2F&amp;show_text=false&amp;width=340" data-title="Toyota Valenzuela parts advertisement (video)"><video controls playsinline preload="metadata" poster="ojt-video-poster.jpg" aria-label="Toyota Valenzuela parts advertisement (video)"><source src="parts-ad-video.mp4#t=0.5" type="video/mp4"></video><a href="https://www.facebook.com/share/v/18YpGy4Y2C/" target="_blank" rel="noreferrer">Watch on Facebook ↗</a><span>Parts advertisement · Video</span></div>
-  </div>
-</div>
     <div class="ojt-about fade-in">
       <div class="co-card">
         <small class="co-kick">My company</small>
@@ -1243,28 +1465,28 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
   <li class="hl"><time>Nov 5, 2026</time><p><b>Completed my OJT</b>Finished the required training hours and assigned duties at Toyota Valenzuela.</p></li>
 </ol>
 
-    <h3 class="ojt-h fade-in">What I Did</h3>
+    <h3 class="ojt-h fade-in" id="ojt-did">What I Did</h3>
     <div class="ojt-tracks fade-in">
-      <div class="ojt-track"><h4>Parts Administration in SAP</h4><ul>
+      <div class="ojt-track"><div class="ot-top"><span class="ot-ico">🗂️</span><span class="ot-n">4 tasks</span></div><h4>Parts Administration in SAP</h4><ul>
         <li>Processed client parts requisitions and orders in SAP</li>
         <li>Assisted in creating part numbers for parts ordering</li>
         <li>Posted received goods in SAP so items were properly recorded</li>
         <li>Prepared SOPH (Special Order Parts Handling) forms for back-ordered parts</li></ul></div>
-      <div class="ojt-track"><h4>Quotations &amp; Accessories</h4><ul>
+      <div class="ojt-track"><div class="ot-top"><span class="ot-ico">🧾</span><span class="ot-n">3 tasks</span></div><h4>Quotations &amp; Accessories</h4><ul>
         <li>Prepared Sales Quotations (SQ) for Marketing Professionals</li>
         <li>Updated the FJ Cruiser accessories price list</li>
-        <li>Gained hands-on experience installing accessories such as side visors, luggage trays and undercovers</li></ul></div>
-      <div class="ojt-track"><h4>Data &amp; Inventory</h4><ul>
+        <li>Gained hands-on experience installing accessories such as luggage trays and side visors</li></ul></div>
+      <div class="ojt-track"><div class="ot-top"><span class="ot-ico">📊</span><span class="ot-n">4 tasks</span></div><h4>Data &amp; Inventory</h4><ul>
         <li>Encoded SAP records into Excel for documentation</li>
         <li>Monitored inventory levels throughout the day</li>
         <li>Verified part availability in the Parts System</li>
         <li>Maintained PSI, TMP delivery and BP monitoring records</li></ul></div>
-      <div class="ojt-track"><h4>IT Support</h4><ul>
+      <div class="ojt-track" id="ojt-it"><div class="ot-top"><span class="ot-ico">🖥️</span><span class="ot-n">4 tasks</span></div><h4>IT Support</h4><ul>
         <li>Formatted system units and installed Windows 11</li>
         <li>Set up computer units and assisted with IP management</li>
         <li>Supported replacement of system units and installed required applications</li>
         <li>Replaced printer toner cartridges (Cashier and Service departments)</li></ul></div>
-      <div class="ojt-track"><h4>Beyond the Desk</h4><ul>
+      <div class="ojt-track"><div class="ot-top"><span class="ot-ico">🚀</span><span class="ot-n">4 tasks</span></div><h4>Beyond the Desk</h4><ul>
         <li>Edited the Parts Department organizational chart in Canva</li>
         <li>Took part in a parts promotional video as an on-camera participant</li>
         <li>Attended the Toyota General Assembly</li>
@@ -1273,31 +1495,36 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 
     <h3 class="ojt-h fade-in">From Classroom to Workplace</h3>
     <div class="bridge fade-in">
-      <div><small>In class</small><b>Networking (Cisco)</b><p>At work: helped with computer setup and IP management, and troubleshot printers.</p></div>
-      <div><small>In class</small><b>Documentation &amp; QA</b><p>At work: kept records accurate and double-checked entries, because small errors have real effects.</p></div>
-      <div><small>In class</small><b>Excel, Word &amp; Canva</b><p>At work: encoded data in Excel, prepared forms in Word, and updated the department org chart in Canva.</p></div>
-      <div><small>In class</small><b>Project management</b><p>At work: balanced several tasks in one day, kept to deadlines, and communicated clearly with the team.</p></div>
+      <div><small>In class</small><b>Networking (Cisco)</b><span class="bridge-arrow">↓</span><p><em class="at">At work</em> helped with computer setup and IP management, and troubleshot printers.</p></div>
+      <div><small>In class</small><b>Documentation &amp; QA</b><span class="bridge-arrow">↓</span><p><em class="at">At work</em> kept records accurate and double-checked entries, because small errors have real effects.</p></div>
+      <div><small>In class</small><b>Excel, Word &amp; Canva</b><span class="bridge-arrow">↓</span><p><em class="at">At work</em> encoded data in Excel, prepared forms in Word, and updated the department org chart in Canva.</p></div>
+      <div><small>In class</small><b>Project management</b><span class="bridge-arrow">↓</span><p><em class="at">At work</em> balanced several tasks in one day, kept to deadlines, and communicated clearly with the team.</p></div>
     </div>
     <p class="flow-note">What my degree gave me and where I used it during my OJT.</p>
 
     <h3 class="ojt-h fade-in">Tools &amp; Skills Developed</h3>
-    <div class="chips fade-in"><span>SAP</span><span>Microsoft Excel</span><span>Microsoft Word</span><span>Canva</span><span>Parts catalog system</span><span>Windows 11 setup</span><span>IP management</span><span>Printer support</span><span>Inventory monitoring</span><span>Data encoding accuracy</span><span>Process documentation</span><span>Accountability</span></div>
+    <div class="skl fade-in">
+      <div class="skl-col"><div class="skl-head"><span class="skl-ico">🖥️</span><div><h4>Systems &amp; Software</h4><small>Where I did the daily work</small></div><b>05</b></div><ul><li><strong>SAP</strong><span>Requisitions, quotations, goods posting and part numbering</span></li><li><strong>Microsoft Excel</strong><span>Encoding order records for documentation</span></li><li><strong>Microsoft Word</strong><span>Documents and records for the department</span></li><li><strong>Canva</strong><span>Updating the department org chart and advertisement poster</span></li><li><strong>Parts catalog system</strong><span>Matching part numbers to the right parts</span></li></ul></div>
+      <div class="skl-col"><div class="skl-head"><span class="skl-ico">🛠️</span><div><h4>IT Support</h4><small>Keeping the office running</small></div><b>03</b></div><ul><li><strong>Windows 11 setup</strong><span>Formatting and installing Windows on department units</span></li><li><strong>IP management</strong><span>Helping with computer setup and IP management</span></li><li><strong>Printer support</strong><span>Troubleshooting printers and replacing toner cartridges</span></li></ul></div>
+      <div class="skl-col"><div class="skl-head"><span class="skl-ico">🎯</span><div><h4>Work Habits</h4><small>How I got it done</small></div><b>04</b></div><ul><li><strong>Inventory monitoring</strong><span>Keeping stock and inventory records in check</span></li><li><strong>Data encoding accuracy</strong><span>One wrong digit can delay a mechanic, so I double-check</span></li><li><strong>Process documentation</strong><span>Daily logs compiled into weekly progress reports</span></li><li><strong>Accountability</strong><span>Owning my tasks, mistakes included</span></li></ul></div>
+    </div>
 
-    <h3 class="ojt-h fade-in">Sample Work</h3>
+    <h3 class="ojt-h fade-in" id="ojt-sample">Sample Work</h3>
     <div class="gal fade-in">
       <figure><img src="ojt-windows.jpg" alt="Installing Windows 11 on a department computer" loading="lazy" decoding="async"/><figcaption><b>Windows 11 setup</b>Formatting and installing Windows on a department unit.</figcaption></figure>
       <figure><img src="ojt-toner.jpg" alt="Replacing a printer toner cartridge" loading="lazy" decoding="async"/><figcaption><b>Printer support</b>Replacing a toner cartridge in a department printer.</figcaption></figure>
       <figure><img src="ojt-parts-catalog.jpg" alt="Parts catalog system on screen" loading="lazy" decoding="async"/><figcaption><b>Parts lookup</b>Searching the Toyota parts catalog system to match part numbers.</figcaption></figure>
       <figure><img src="ojt-excel-encoding.jpg" alt="Working on an Excel order record sheet" loading="lazy" decoding="async"/><figcaption><b>Excel encoding</b>Recording SAP order data into Excel for documentation. Contents are not shown for confidentiality.</figcaption></figure>
-      <figure><img src="ojt-orgchart.jpg" alt="Parts Department org chart being edited in Canva" loading="lazy" decoding="async"/><figcaption><b>Department org chart in Canva</b>I edited and updated the Parts Department manpower chart. Names are blurred.</figcaption></figure>
-      <figure><img src="ojt-accessories.jpg" alt="Installing a luggage tray in a vehicle" loading="lazy" decoding="async"/><figcaption><b>Accessories installation</b>Hands-on practice installing vehicle accessories such as luggage trays, side visors and undercovers.</figcaption></figure>
-      <figure><img src="ojt-design.jpg" alt="Working on a design on a laptop" loading="lazy" decoding="async"/><figcaption><b>Department materials</b>Working on Toyota Accessories material for the department.</figcaption></figure>
+      <figure id="shot-orgchart"><img src="ojt-orgchart.jpg" alt="Parts Department org chart being edited in Canva" loading="lazy" decoding="async"/><figcaption><b>Department org chart in Canva</b>I edited and updated the Parts Department manpower chart. Names are blurred.</figcaption></figure>
+      <figure><img src="ojt-accessories.jpg" alt="Installing a luggage tray in a vehicle" loading="lazy" decoding="async"/><figcaption><b>Accessories installation</b>Hands-on practice installing vehicle accessories such as luggage trays and side visors.</figcaption></figure>
+      <figure><img src="ojt-design.jpg" alt="Editing an advertisement poster on a laptop" loading="lazy" decoding="async"/><figcaption><b>Department materials</b>Editing a poster for the department’s advertisement.</figcaption></figure>
     </div>
 
     <h3 class="ojt-h fade-in">The People Behind the Internship</h3>
     <div class="people fade-in">
       <figure><img src="ojt-department.jpg" alt="Parts Department team with a cake" loading="lazy" decoding="async"/><figcaption><b>My Parts Department</b>The team I cherish. They made learning feel safe.</figcaption></figure>
       <figure><img src="ojt-certificate.jpg" alt="Group photo holding the Certificate of Appreciation" loading="lazy" decoding="async"/><figcaption><b>Certificate of Appreciation to Toyota Valenzuela</b>PLV’s Certificate of Appreciation to Toyota Valenzuela, presented during the OJT visitation with the team and our coordinator.</figcaption></figure>
+      <figure><img src="ojt-completion.jpg" alt="Two interns holding their Certificates of Completion with the Toyota Valenzuela HR representative" loading="lazy" decoding="async"/><figcaption><b>Certificates of Completion</b>Where we received our certificates of completion, together with Toyota Valenzuela’s HR representative.</figcaption></figure>
       <figure><img src="ojt-batch.jpg" alt="The OJT batch at the dealership entrance" loading="lazy" decoding="async"/><figcaption><b>My OJT batch</b>All of us interns who trained together at Toyota Valenzuela.</figcaption></figure>
     </div>
     <p class="ojt-privacy">Photos are published with the consent of the people pictured. Customer data, internal documents, supervisor evaluations and system screens are not shown, and the Excel image is blurred. Company background comes from Toyota Valenzuela's public company profile. The tasks listed are what I assisted with or handled as an intern.</p>
@@ -1321,6 +1548,22 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
         <div class="rf-card fade-in"><span class="n">02</span><h4>An all-around intern</h4><p>Because I was willing to learn everything, I got to do the work of the people around me: parts admin, quotations, part numbering, goods posting, and even IT support. In time, I could handle many of these tasks on my own, without needing their help.</p></div>
         <div class="rf-card fade-in"><span class="n">03</span><h4>Accuracy matters</h4><p>One wrong part number or posting can delay a mechanic’s order. Working in SAP taught me to double-check, verify, and own my results. This is the same discipline I bring to documentation and QA.</p></div>
         <div class="rf-card fade-in"><span class="n">04</span><h4>Say yes to the unexpected</h4><p>One day I was in SAP, the next I was installing Windows, fitting accessories on a vehicle, or appearing in a parts advertisement. Adaptability grows when you keep saying yes.</p></div>
+      </div>
+
+      <div class="rf-it">
+        <small class="fade-in">Reflection · Through an IT lens</small>
+        <h3 class="rf-it-title fade-in">What my practicum taught me <em>about IT.</em></h3>
+        <p class="rf-it-lead fade-in">Coding was not part of my OJT. My growth came from working inside real systems, with real records, real people and real consequences.</p>
+        <div class="rf-map">
+          <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Entering part numbers, quantities and customer details in SAP and the Toyota Parts System.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Data accuracy &amp; QA</h5><p>I rechecked every entry against its original record before saving. I now apply the same check in my IT subjects.</p></div></div>
+          <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Watching SAP handle requisitions, quotations, inventory and goods posting.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Information systems</h5><p>I saw how enterprise software supports transactions, inventory and customer records in a real business.</p></div></div>
+          <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Formatting units, installing Windows, setting up computers and managing IP addresses.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Networking &amp; hardware</h5><p>My Cisco and networking lessons stopped being theory and became tools I used in a real office.</p></div></div>
+          <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Daily activity logs compiled into weekly progress reports with photo documentation.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Documentation</h5><p>Recording my work every day mirrors professional practice, and it is the skill I want to build my career on.</p></div></div>
+        </div>
+        <div class="rf-shift fade-in">
+          <small>My new perspective</small>
+          <p>I now see IT as <em>the support that keeps business processes running.</em> Even data entry, inventory checks or fixing a printer directly helps customer service. I will bring that mindset into documentation, quality assurance and systems support, and keep thinking from the end user’s side.</p>
+        </div>
       </div>
 
       <div class="rf-moment fade-in">
@@ -1352,7 +1595,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
         <figure><img src="ojt-farewell-group.jpg" alt="Jorich holding the farewell cake, surrounded by the Parts Department team" loading="lazy" decoding="async"/><figcaption>Me and my Parts Department, together on my last days.</figcaption></figure>
         <div class="fin-row">
           <figure><img class="cakeimg" src="ojt-farewell-cake.jpg" alt="Farewell cake with the message Hwaiting Jo" loading="lazy" decoding="async"/><figcaption>The cake that said it all: "Hwaiting, Jo!"</figcaption></figure>
-          <figure><video controls playsinline preload="metadata" poster="ojt-farewell-poster.jpg" aria-label="Short clip of the Parts Department team celebrating"><source src="farewell.mp4#t=0.5" type="video/mp4" onerror="var d=document.createElement('div');d.textContent='This clip could not load here.';d.style.cssText='background:#1b1a18;color:#fff;padding:2rem;text-align:center';this.closest('video').replaceWith(d)"></video><figcaption>A short clip of our celebration in the department.</figcaption></figure>
+          <figure><video controls playsinline preload="metadata" poster="ojt-farewell-poster.jpg" aria-label="Short clip of one of the Parts Department team’s happy moments"><source src="farewell.mp4#t=0.5" type="video/mp4" onerror="var d=document.createElement('div');d.textContent='This clip could not load here.';d.style.cssText='background:#1b1a18;color:#fff;padding:2rem;text-align:center';this.closest('video').replaceWith(d)"></video><figcaption>A short clip of one of our happy moments in the department.</figcaption></figure>
         </div>
       </div>
     </div>
@@ -1367,7 +1610,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
   </div>
 
   <!-- Featured -->
-  <div class="project-featured fade-in">
+  <div class="project-featured fade-in" id="proj-idetect">
     <div class="proj-img">
       <img src="idetect.jpg" alt="iDetect"  loading="lazy" decoding="async"/>
     </div>
@@ -1390,7 +1633,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 
   <!-- Row of 3 -->
   <div class="projects-row fade-in">
-    <div class="project-cell">
+    <div class="project-cell" id="proj-piso">
       <div class="proj-img"><img src="piso.jpg" alt="Piso Politiko"  loading="lazy" decoding="async"/></div>
       <div class="project-cell-body">
         <span class="proj-role-tag">Project Manager</span>
@@ -1410,7 +1653,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
         <a href="https://bakunawa-studios.itch.io/shadow-of-the-past" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Play on itch.io ↗</a>
       </div>
     </div>
-    <div class="project-cell">
+    <div class="project-cell" id="proj-buwaya">
       <div class="proj-img"><img src="Catch.png" alt="Buwaya Catch"  loading="lazy" decoding="async"/></div>
       <div class="project-cell-body">
         <span class="proj-role-tag">Project Manager</span>
@@ -1434,7 +1677,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
         <a href="https://youtu.be/Z3Q16MXEmT8" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Watch demo ↗</a>
       </div>
     </div>
-    <div class="project-cell">
+    <div class="project-cell" id="proj-maricopa">
       <div class="proj-img"><img src="maricopa.png" alt="Maricopa"  loading="lazy" decoding="async"/></div>
       <div class="project-cell-body">
         <span class="proj-role-tag" style="background:var(--teal);">Group Project</span>
@@ -1444,7 +1687,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
         <a href="https://youtu.be/_pNvUakrliE" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">Watch demo ↗</a>
       </div>
     </div>
-    <div class="project-cell">
+    <div class="project-cell" id="proj-arta">
       <div class="proj-img"><img src="arta.png" alt="ARTA"  loading="lazy" decoding="async"/></div>
       <div class="project-cell-body">
         <span class="proj-role-tag" style="background:var(--teal);">Group Project</span>
@@ -1454,7 +1697,7 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
         <a href="https://drive.google.com/drive/folders/1_hptyvoOac_e1Po7ZMrfqROec6cmSO62" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">View presentation ↗</a>
       </div>
     </div>
-    <div class="project-cell">
+    <div class="project-cell" id="proj-vits">
       <div class="proj-img"><img src="vits.png" alt="VITS IMS"  loading="lazy" decoding="async"/></div>
       <div class="project-cell-body">
         <span class="proj-role-tag" style="background:var(--teal);">Group Project</span>
@@ -1661,6 +1904,43 @@ document.querySelectorAll('.vid').forEach(function(box){
     v.replaceWith(d);
   });
 });
+</script>
+
+<script>
+(function(){
+  var D=[
+   {t:"Documentation & QA",i:"📄",p:"I write documentation people can actually use, and I check my work because small errors have real effects.",b:["Documentation Lead for the iDetect capstone thesis","Encoded SAP records into Excel and kept PSI, TMP delivery and BP monitoring records at Toyota Valenzuela","Prepared SOPH forms for back-ordered parts and rechecked part numbers and quantities before saving"],l:[["What I did at OJT","#ojt-did"],["iDetect project","#proj-idetect"]]},
+   {t:"Project Management",i:"📋",p:"I keep teams aligned: clear goals, clear deadlines, and clear communication.",b:["Project Manager on multiple group projects","Coordinated timelines and delegated tasks, tracked in Jira","Led the teams behind Piso Politiko and Buwaya Catch"],l:[["Piso Politiko","#proj-piso"],["Buwaya Catch","#proj-buwaya"]]},
+   {t:"Programming",i:"💻",p:"I build simple, practical solutions with clean code.",b:["Built this portfolio from scratch with HTML, CSS and JavaScript","Maricopa: a restaurant website with a data-driven daily serving prediction module","ARTA Customer Satisfaction System: a Flutter and Supabase app (group project)"],l:[["Maricopa site","#proj-maricopa"],["ARTA app","#proj-arta"]]},
+   {t:"Networking",i:"🌐",p:"Cisco fundamentals, applied to real setups and troubleshooting.",b:["Four Cisco NetAcad certifications, from Networking Basics to Network Support and Security","Helped with computer setup and IP management during my OJT","Troubleshot printers and replaced toner cartridges for the Cashier and Service departments"],l:[["Cisco certifications","#certifications"],["IT support at OJT","#ojt-it"]]},
+   {t:"Soft Skills",i:"🤝",p:"I adapt quickly and work well with people, wherever the team needs me.",b:["Cross-trained in 5 functions during my OJT","Stepped in front of the camera for Toyota Valenzuela's parts advertisement","Balanced several tasks in one day and communicated clearly with the team"],l:[["Parts ad videos","#featured"],["My reflections","#reflections"]]},
+   {t:"Design & Wireframing",i:"🎨",p:"User-focused layouts, from wireframe to polished material.",b:["Designed the front-end dashboard for the VITS Inventory Management System in Figma","Edited and updated the Parts Department org chart in Canva","Worked on Toyota Accessories materials for the department"],l:[["VITS dashboard (Figma)","#proj-vits"],["Canva org chart","#shot-orgchart"]]},
+   {t:"Organization",i:"🏛️",p:"Planning, logistics and structure so events and teams run smoothly.",b:["Member of VITS under the Logistics Committee","Event coordination and organizational activities","Punctual, planned and detail-oriented in everything I take on"],l:[["VITS Logistics","#about-vits"],["VITS inventory system","#proj-vits"]]}
+  ];
+  var cols=document.querySelectorAll('.skill-col[data-skill]'),box=document.getElementById('skill-detail'),cur=-1;
+  if(!box)return;
+  function close(){box.hidden=true;box.innerHTML='';cols.forEach(function(c){c.classList.remove('active');c.setAttribute('aria-expanded','false');var b=c.querySelector('.skill-more b');if(b)b.textContent='+';});cur=-1;}
+  function open(i){
+    if(cur===i){close();return;}
+    var d=D[i];
+    box.innerHTML='<button class="sd-close" aria-label="Close">✕</button><div class="sd-ico">'+d.i+'</div><div class="sd-main"><span class="sd-kick">Skill '+String(i+1).padStart(2,'0')+'</span><h3>'+d.t+'</h3><p class="sd-lead">'+d.p+'</p><ul>'+d.b.map(function(x){return'<li>'+x+'</li>'}).join('')+'</ul><div class="sd-links">'+d.l.map(function(x){return'<a href="'+x[1]+'">'+x[0]+' →</a>'}).join('')+'</div></div>';
+    box.hidden=false;
+    cols.forEach(function(c,k){var on=k===i;c.classList.toggle('active',on);c.setAttribute('aria-expanded',on);var b=c.querySelector('.skill-more b');if(b)b.textContent=on?'−':'+';});
+    cur=i;
+    box.querySelector('.sd-close').onclick=close;
+    box.querySelectorAll('.sd-links a').forEach(function(a){a.addEventListener('click',function(e){
+      var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
+      t.scrollIntoView({behavior:'smooth',block:'start'});
+      t.classList.remove('jump-flash');void t.offsetWidth;t.classList.add('jump-flash');
+      setTimeout(function(){t.classList.remove('jump-flash')},2600);
+    });});
+    box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  cols.forEach(function(c,i){
+    c.addEventListener('click',function(){open(i)});
+    c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i)}});
+  });
+})();
 </script>
 </body>
 </html>
