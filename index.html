@@ -1182,7 +1182,6 @@ nav{height:56px}
 .nav-links{height:56px}
 /* About: colorful background */
 #about{position:relative;overflow:hidden;background:radial-gradient(circle at 6% 14%,rgba(242,168,29,.28),transparent 34%),radial-gradient(circle at 94% 60%,rgba(255,122,89,.24),transparent 38%),radial-gradient(circle at 40% 100%,rgba(216,52,43,.10),transparent 40%),linear-gradient(180deg,#fff8ef,#ffeadb)}
-#about:after{content:"";position:absolute;left:-80px;bottom:60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(242,168,29,.35),transparent 70%)}
 #about>*{position:relative;z-index:1}
 .about-photo{box-shadow:10px 10px 0 var(--gold)}
 .about-glance .ag-grid>div,.about-body .ag-grid>div{background:rgba(255,255,255,.75);backdrop-filter:blur(2px)}
@@ -1306,6 +1305,67 @@ body{overflow-x:clip}
 @media(min-width:1700px){
   nav{padding-left:max(3rem,calc((100% - 1560px)/2));padding-right:max(3rem,calc((100% - 1560px)/2))}
 }
+
+/* ===== SEMINARS: a timeline grouped by day ===== */
+#seminars{background:linear-gradient(180deg,var(--off) 0%,#fff3e4 100%)}
+.sm-intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1.5rem 3rem;align-items:end;margin-bottom:2.5rem}
+.sm-lead{font-family:'Cormorant Garamond',serif;font-size:clamp(1.45rem,2.8vw,2.2rem);line-height:1.2;max-width:34ch}
+.sm-tools{display:flex;flex-direction:column;gap:.8rem}
+.sm-filter{display:flex;flex-wrap:wrap;gap:.5rem}
+.sm-filter button{font:600 .82rem 'Figtree',sans-serif;padding:.6rem 1rem;min-height:42px;border:1px solid var(--black);background:var(--white);color:var(--black);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+.sm-filter button:hover{background:var(--sun)}
+.sm-filter button[aria-pressed="true"]{background:var(--black);color:#fff;box-shadow:3px 3px 0 var(--red)}
+.sm-filter button:focus-visible,.ct-copy:focus-visible,.ct-cta:focus-visible,.ct-row:focus-visible,.ct-v:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sm-count{font-size:.85rem;color:var(--muted)}
+.sm-groups{border-top:3px solid var(--black)}
+.sm-group{display:grid;grid-template-columns:minmax(9rem,13rem) minmax(0,1fr);gap:1.5rem 3rem;padding:2rem 0;border-bottom:1px solid var(--rule)}
+.sm-group[hidden]{display:none}
+.sm-when{display:flex;flex-direction:column;align-items:flex-start;line-height:1}
+.sm-mo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.06em;color:var(--red)}
+.sm-day{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,7.5rem);line-height:.85;color:transparent;-webkit-text-stroke:2px var(--black)}
+.sm-yr{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;margin-top:.35rem}
+.sm-note{margin-top:.9rem;font-size:.82rem;font-weight:700;line-height:1.3;background:var(--gold);color:#1b1100;padding:.3rem .6rem}
+.sm-talks{list-style:none;display:grid;align-content:start}
+.sm-talk{display:flex;justify-content:space-between;align-items:flex-start;gap:1.25rem;padding:1.15rem 0 1.15rem 1.25rem;border-bottom:1px solid var(--rule);border-left:5px solid var(--red);margin-bottom:.6rem;background:rgba(255,255,255,.55);padding-right:1rem}
+.sm-talk:last-child{margin-bottom:0}
+.sm-talk[data-t="sec"]{border-left-color:var(--black)}
+.sm-talk[data-t="inn"]{border-left-color:var(--gold)}
+.sm-talk[hidden]{display:none}
+.sm-talk h4{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(1.15rem,1.8vw,1.45rem);line-height:1.25;margin-bottom:.3rem}
+.sm-talk p{font-size:.85rem;color:var(--muted);line-height:1.45}
+.sm-tag{flex:none;font-size:.78rem;font-weight:700;padding:.3rem .65rem;border:1px solid var(--black);background:#fff;white-space:nowrap}
+.sm-talk[data-t="dev"] .sm-tag{background:var(--red);border-color:var(--red);color:#fff}
+.sm-talk[data-t="sec"] .sm-tag{background:var(--black);color:#fff}
+.sm-talk[data-t="inn"] .sm-tag{background:var(--gold);border-color:var(--gold);color:#1b1100}
+@media(max-width:900px){.sm-intro{grid-template-columns:1fr}.sm-group{grid-template-columns:1fr;gap:1.1rem;padding:1.6rem 0}.sm-when{flex-direction:row;align-items:baseline;flex-wrap:wrap;gap:.6rem}.sm-day{font-size:4.2rem}.sm-yr{margin:0}.sm-note{margin:0 0 0 auto}}
+@media(max-width:600px){.sm-talk{flex-direction:column;gap:.7rem}.sm-tag{white-space:normal}.sm-when{display:grid;grid-template-columns:auto auto 1fr;align-items:baseline}.sm-note{grid-column:1/-1;justify-self:start;margin:.3rem 0 0}}
+
+/* ===== CONTACT ===== */
+#contact{position:relative;overflow:hidden;color:#fff;padding:clamp(3.5rem,8vw,6.5rem) clamp(1.25rem,5vw,4rem);background:linear-gradient(135deg,#a9231c 0%,#d8342b 52%,#e04a36 100%)}
+#contact:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1px);background-size:22px 22px}
+.ct-wrap{position:relative;max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:3rem clamp(2rem,6vw,5.5rem);align-items:center}
+.ct-status{display:inline-flex;align-items:center;gap:.6rem;font-size:.9rem;font-weight:600;background:rgba(0,0,0,.22);padding:.45rem .9rem;margin-bottom:1.5rem}
+.ct-status i{width:9px;height:9px;border-radius:50%;background:#2ecc71;box-shadow:0 0 0 0 rgba(46,204,113,.6);animation:pulse 2s infinite}
+.ct-title{font-weight:400;line-height:.9;margin-bottom:1.6rem}
+.ct-title span{display:block;font-family:'Bebas Neue',sans-serif;font-size:clamp(3.6rem,9vw,7.6rem);letter-spacing:.02em}
+.ct-title em{display:block;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:clamp(2.6rem,6.6vw,5.4rem);color:#ffd77a;line-height:1;margin-top:.15em}
+.ct-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2vw,1.5rem);line-height:1.5;max-width:34rem;margin-bottom:.9rem}
+.ct-help{font-size:.95rem;line-height:1.6;max-width:34rem;color:rgba(255,255,255,.9)}
+.ct-cta{display:inline-block;margin-top:1.8rem;background:#fff;color:var(--black);padding:1rem 1.7rem;font-size:.95rem;font-weight:700;text-decoration:none;box-shadow:6px 6px 0 var(--black);transition:transform .2s,box-shadow .2s}
+.ct-cta:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--black)}
+.ct-list{border-top:2px solid #fff}
+.ct-row{display:grid;grid-template-columns:6.5rem minmax(0,1fr) auto;gap:1rem;align-items:center;padding:1.25rem .75rem;border-bottom:1px solid rgba(255,255,255,.4);color:#fff;text-decoration:none;transition:background .2s,color .2s}
+.ct-row.is-link:hover{background:#fff;color:var(--black)}
+.ct-k{font-size:.85rem;font-weight:600;color:rgba(255,255,255,.9);transition:color .2s}
+.ct-row.is-link:hover .ct-k{color:var(--red)}
+.ct-v{font-size:clamp(1rem,1.7vw,1.3rem);font-weight:600;line-height:1.3;overflow-wrap:anywhere;color:inherit;text-decoration:none}
+.ct-act{font-size:.85rem;font-weight:700}
+.ct-copy{font:700 .85rem 'Figtree',sans-serif;background:var(--black);color:#fff;border:none;padding:.65rem 1rem;min-height:42px;min-width:5.2rem;cursor:pointer;transition:background .2s}
+.ct-copy:hover{background:var(--red-dark)}
+.ct-copy.done{background:#1f8f4e}
+@media(max-width:900px){.ct-wrap{grid-template-columns:1fr}}
+@media(max-width:520px){.ct-row{grid-template-columns:1fr auto;gap:.2rem 1rem;padding:1.1rem .5rem}.ct-k{grid-column:1/-1}.ct-cta{display:block;text-align:center}}
+@media(prefers-reduced-motion:reduce){.ct-status i{animation:none}}
 </style>
 </head>
 <body>
@@ -1947,79 +2007,72 @@ body{overflow-x:clip}
     <h2 class="display">Seminars &amp; Training</h2>
     <span class="section-label-right">Learning &amp; Growth</span>
   </div>
-  <div class="seminars-cols fade-in">
-    <div class="seminars-col">
-      <div class="seminar-entry">
-        <span class="sem-no">01</span>
-        <div>
-          <h4>Game Design and Development</h4>
-          <p>Pamantasan ng Lungsod ng Valenzuela · April 16, 2026 · CEIT Lecture Hall</p>
-        </div>
+
+  <div class="sm-intro fade-in">
+    <p class="sm-lead">Learning didn’t stop at the classroom door. I made time for talks on development, cybersecurity and digital change.</p>
+    <div class="sm-tools">
+      <div class="sm-filter" role="group" aria-label="Filter seminars by topic">
+        <button type="button" data-f="all" aria-pressed="true">All topics</button>
+        <button type="button" data-f="dev" aria-pressed="false">Development</button>
+        <button type="button" data-f="sec" aria-pressed="false">Cybersecurity</button>
+        <button type="button" data-f="inn" aria-pressed="false">Innovation</button>
       </div>
-      <div class="seminar-entry">
-        <span class="sem-no">02</span>
-        <div>
-          <h4>Launch for your Tech Career: The High Demand Skillset of a Full Stack Web Developer</h4>
-          <p>PLV · April 25, 2024 · PLV Auditorium</p>
-        </div>
-      </div>
-      <div class="seminar-entry">
-        <span class="sem-no">03</span>
-        <div>
-          <h4>IT Developer Life Hacks: Working Smart as a Computer Programmer</h4>
-          <p>PLV · April 20, 2024 · PLV Auditorium</p>
-        </div>
-      </div>
+      <p class="sm-count" id="sm-count" aria-live="polite">Showing 6 of 6 seminars</p>
     </div>
-    <div class="rule-v"></div>
-    <div class="seminars-col">
-      <div class="seminar-entry">
-        <span class="sem-no">04</span>
-        <div>
-          <h4>Fortifying the Future: Navigating the Landscape of Cybersecurity Essentials</h4>
-          <p>PLV · April 20, 2024 · PLV Auditorium</p>
-        </div>
-      </div>
-      <div class="seminar-entry">
-        <span class="sem-no">05</span>
-        <div>
-          <h4>Unlocking Innovation: Navigating Digital Transformation in Today's Landscape</h4>
-          <p>PLV · April 20, 2024 · PLV Auditorium</p>
-        </div>
-      </div>
-      <div class="seminar-entry">
-        <span class="sem-no">06</span>
-        <div>
-          <h4>Securing Connections: Strategies for Cybersecurity and Network Operations</h4>
-          <p>PLV · April 20, 2024 · PLV Auditorium</p>
-        </div>
-      </div>
+  </div>
+
+  <div class="sm-groups">
+    <div class="sm-group fade-in">
+      <div class="sm-when"><span class="sm-mo">Apr</span><span class="sm-day">16</span><span class="sm-yr">2026</span></div>
+      <ul class="sm-talks">
+        <li class="sm-talk" data-t="dev"><div><h4>Game Design and Development</h4><p>Pamantasan ng Lungsod ng Valenzuela · CEIT Lecture Hall</p></div><span class="sm-tag">Game development</span></li>
+      </ul>
+    </div>
+
+    <div class="sm-group fade-in">
+      <div class="sm-when"><span class="sm-mo">Apr</span><span class="sm-day">25</span><span class="sm-yr">2024</span></div>
+      <ul class="sm-talks">
+        <li class="sm-talk" data-t="dev"><div><h4>Launch for your Tech Career: The High Demand Skillset of a Full Stack Web Developer</h4><p>PLV Auditorium</p></div><span class="sm-tag">Web development</span></li>
+      </ul>
+    </div>
+
+    <div class="sm-group fade-in">
+      <div class="sm-when"><span class="sm-mo">Apr</span><span class="sm-day">20</span><span class="sm-yr">2024</span><span class="sm-note">Four talks in one day</span></div>
+      <ul class="sm-talks">
+        <li class="sm-talk" data-t="dev"><div><h4>IT Developer Life Hacks: Working Smart as a Computer Programmer</h4><p>PLV Auditorium</p></div><span class="sm-tag">Programming</span></li>
+        <li class="sm-talk" data-t="sec"><div><h4>Fortifying the Future: Navigating the Landscape of Cybersecurity Essentials</h4><p>PLV Auditorium</p></div><span class="sm-tag">Cybersecurity</span></li>
+        <li class="sm-talk" data-t="inn"><div><h4>Unlocking Innovation: Navigating Digital Transformation in Today's Landscape</h4><p>PLV Auditorium</p></div><span class="sm-tag">Digital transformation</span></li>
+        <li class="sm-talk" data-t="sec"><div><h4>Securing Connections: Strategies for Cybersecurity and Network Operations</h4><p>PLV Auditorium</p></div><span class="sm-tag">Cybersecurity &amp; networking</span></li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════ CONTACT ═══════════════════════════════ -->
 <section id="contact">
-  <div class="contact-inner fade-in">
-    <span class="contact-kicker">Let's Connect</span>
-    <h2 class="contact-headline">Get<br><em>In Touch</em></h2>
-    <p class="contact-sub">Whether you're looking for an IT intern, a documentation lead, or a project manager — I'd love to hear from you.</p>
-    <div class="contact-row">
-      <div class="contact-item">
-        <span class="k">Email</span>
-        <a href="mailto:enoria.jorich52@gmail.com">enoria.jorich52@gmail.com</a>
+  <div class="ct-wrap">
+    <div class="ct-intro fade-in">
+      <p class="ct-status"><i aria-hidden="true"></i>Open to opportunities</p>
+      <h2 class="ct-title"><span>Let’s build</span><em>something reliable.</em></h2>
+      <p class="ct-sub">Looking for an IT intern, a documentation lead, or a project manager? Send me a message. I’d love to hear what you’re working on.</p>
+      <p class="ct-help">I can help with documentation, quality assurance, project management and systems support.</p>
+      <a class="ct-cta" href="mailto:enoria.jorich52@gmail.com?subject=Hello%20Jorich">Send an email</a>
+    </div>
+
+    <div class="ct-list fade-in">
+      <div class="ct-row is-link">
+        <span class="ct-k">Email</span>
+        <a class="ct-v" href="mailto:enoria.jorich52@gmail.com">enoria.jorich52@gmail.com</a>
+        <button type="button" class="ct-copy" data-copy="enoria.jorich52@gmail.com" aria-label="Copy email address">Copy</button>
       </div>
-      <div class="contact-item">
-        <span class="k">LinkedIn</span>
-        <a href="https://www.linkedin.com/in/jorich-maricar-enoria-960739392/" target="_blank" rel="noreferrer">Jorich Maricar Enoria</a>
-      </div>
-      <div class="contact-item">
-        <span class="k">Resume</span>
-        <a href="Enoria_Jorich_Resume.pdf" download="Enoria_Jorich_Resume.pdf" data-resume>Download PDF</a>
-      </div>
-      <div class="contact-item">
-        <span class="k">Location</span>
-        <a>Valenzuela City, Philippines</a>
+      <a class="ct-row is-link" href="https://www.linkedin.com/in/jorich-maricar-enoria-960739392/" target="_blank" rel="noreferrer">
+        <span class="ct-k">LinkedIn</span><span class="ct-v">Jorich Maricar Enoria</span><span class="ct-act">Open ↗</span>
+      </a>
+      <a class="ct-row is-link" href="Enoria_Jorich_Resume.pdf" download="Enoria_Jorich_Resume.pdf" data-resume>
+        <span class="ct-k">Resume</span><span class="ct-v">Download PDF</span><span class="ct-act">Save</span>
+      </a>
+      <div class="ct-row">
+        <span class="ct-k">Based in</span><span class="ct-v">Valenzuela City, Philippines</span>
       </div>
     </div>
   </div>
@@ -2286,6 +2339,28 @@ document.querySelectorAll('.vid').forEach(function(box){
   window.addEventListener('scroll',function(){if(!queued){queued=true;requestAnimationFrame(spy);}},{passive:true});
   window.addEventListener('resize',spy);
   spy();
+})();
+</script>
+<script>
+(function(){
+  // Seminar topic filter
+  var btns=document.querySelectorAll('.sm-filter button'),talks=document.querySelectorAll('.sm-talk'),groups=document.querySelectorAll('.sm-group'),out=document.getElementById('sm-count');
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    var f=b.getAttribute('data-f'),n=0;
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    talks.forEach(function(t){var show=f==='all'||t.getAttribute('data-t')===f;t.hidden=!show;if(show)n++;});
+    groups.forEach(function(g){g.hidden=!g.querySelector('.sm-talk:not([hidden])');});
+    if(out)out.textContent='Showing '+n+' of '+talks.length+' seminar'+(talks.length===1?'':'s');
+  });});
+  // Copy email
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var txt=btn.getAttribute('data-copy');
+      function ok(){btn.textContent='Copied';btn.classList.add('done');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done');},1800);}
+      function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok();}catch(e){}ta.remove();}
+      if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fb);}else{fb();}
+    });
+  });
 })();
 </script>
 </body>
