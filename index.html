@@ -1211,8 +1211,8 @@ nav{height:56px}
 .co-facts dl>div{display:grid;grid-template-columns:9.5rem 1fr;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--rule)}
 .co-facts dt{font-size:.68rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red)}
 .co-facts dd{font-size:.95rem;font-weight:600;line-height:1.35}
-@media(max-width:900px){.co-grid{grid-template-columns:1fr}.co-story{border-right:none;border-bottom:1px solid var(--rule)}}
-@media(max-width:520px){.co-facts dl>div{grid-template-columns:1fr;gap:.15rem}.co-spot{box-shadow:7px 7px 0 var(--red)}.co-story>p{font-size:1.15rem}}
+@media(max-width:900px){.ojt-wrap{padding:2rem 0}.co-grid{grid-template-columns:1fr}.co-story{border-right:none;border-bottom:1px solid var(--rule)}}
+@media(max-width:520px){.co-facts dl>div{grid-template-columns:1fr;gap:.15rem}.co-spot{box-shadow:7px 7px 0 var(--red)}.co-story>p{font-size:1.15rem}.co-big{grid-template-columns:repeat(2,minmax(0,1fr))}.co-big div:last-child{grid-column:1/-1}.co-big b{font-size:clamp(1.7rem,8vw,2.4rem)}}
 /* Week by week */
 .wk{margin:0 0 3.5rem;padding:clamp(1.2rem,3vw,2rem);background:linear-gradient(135deg,#fff,#fff3e4);border:2px solid var(--black);box-shadow:10px 10px 0 var(--gold);position:relative;overflow:hidden}
 .wk:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,89,.35),transparent 70%)}
@@ -1551,7 +1551,7 @@ body{overflow-x:clip}
         Currently, I serve as <mark class="hl">Documentation Lead</mark> for my capstone thesis <em>iDetect</em>, an OCR-based ID verification system designed to support fraud detection and verification processes. In this role, I gained experience in technical documentation, stakeholder communication, and translating ideas into structured and practical solutions.
       </p>
       <p id="about-vits">
-        Beyond academics, I'm a member of the Valenzuela Information Technology Society (VITS) under the Logistics Committee, where I contribute to event coordination and organizational activities. I naturally gravitate toward documentation and structured work, because organization, accuracy, and attention to detail matter.
+        Beyond academics, I've been a member of the Valenzuela Information Technology Society (VITS) and part of its Logistics Committee since late 2025. I naturally gravitate toward documentation and structured work, because organization, accuracy, and attention to detail matter.
       </p>
       <p>
         I value punctuality and believe good systems and strong teamwork start with proper planning and clear communication. Outside of technology, I enjoy singing, which gives me a creative outlet and balance alongside academic and project work.
@@ -1561,7 +1561,7 @@ body{overflow-x:clip}
         <div class="ag-grid">
           <div><i>🎯</i><b>Now</b><span>Documentation Lead for the iDetect capstone</span></div>
           <div><i>🧭</i><b>Leading</b><span>Project Manager on multiple group projects</span></div>
-          <div><i>🤝</i><b>Giving back</b><span>VITS Logistics Committee member</span></div>
+          <div><i>🤝</i><b>Involved</b><span>Planning and organization</span></div>
           <div><i>🎤</i><b>Off-duty</b><span>Singing, my creative reset</span></div>
         </div>
         <p class="ag-line">Good systems start with <em>good planning.</em></p>
@@ -2190,7 +2190,7 @@ document.querySelectorAll('.vid').forEach(function(box){
    {t:"Networking",i:"🌐",p:"Cisco fundamentals, applied to real setups and troubleshooting.",b:["Four Cisco NetAcad certifications, from Networking Basics to Network Support and Security","Helped with computer setup and IP management during my OJT","Troubleshot printers and replaced toner cartridges for the Cashier and Service departments"],l:[["Cisco certifications","#certifications"],["IT support at OJT","#ojt-it"]]},
    {t:"Soft Skills",i:"🤝",p:"I adapt quickly and work well with people, wherever the team needs me.",b:["Cross-trained in 5 functions during my OJT","Stepped in front of the camera for Toyota Valenzuela's parts advertisement","Balanced several tasks in one day and communicated clearly with the team"],l:[["Parts ad videos","#featured"],["My reflections","#reflections"]]},
    {t:"Design & Wireframing",i:"🎨",p:"User-focused layouts, from wireframe to polished material.",b:["Designed the front-end dashboard for the VITS Inventory Management System in Figma","Edited and updated the Parts Department org chart in Canva","Worked on Toyota Accessories materials for the department"],l:[["VITS dashboard (Figma)","#proj-vits"],["Canva org chart","#shot-orgchart"]]},
-   {t:"Organization",i:"🏛️",p:"Planning, logistics and structure so events and teams run smoothly.",b:["Member of VITS under the Logistics Committee","Event coordination and organizational activities","Punctual, planned and detail-oriented in everything I take on"],l:[["VITS Logistics","#about-vits"],["VITS inventory system","#proj-vits"]]}
+   {t:"Organization",i:"🏛️",p:"Planning, logistics and structure so events and teams run smoothly.",b:["Helped coordinate events and support organizational activities","Punctual, planned and detail-oriented in everything I take on"],l:[["VITS Logistics","#about-vits"],["VITS inventory system","#proj-vits"]]}
   ];
   var cols=document.querySelectorAll('.skill-col[data-skill]'),box=document.getElementById('skill-detail'),cur=-1;
   if(!box)return;
