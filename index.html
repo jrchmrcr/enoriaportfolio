@@ -1182,10 +1182,8 @@ nav{height:56px}
 .nav-links{height:56px}
 /* About: colorful background */
 #about{position:relative;overflow:hidden;background:radial-gradient(circle at 6% 14%,rgba(242,168,29,.28),transparent 34%),radial-gradient(circle at 94% 60%,rgba(255,122,89,.24),transparent 38%),radial-gradient(circle at 40% 100%,rgba(216,52,43,.10),transparent 40%),linear-gradient(180deg,#fff8ef,#ffeadb)}
-#about:before{content:"";position:absolute;right:-120px;top:90px;width:340px;height:340px;border-radius:50%;border:2px dashed rgba(216,52,43,.28);animation:spin 60s linear infinite}
 #about:after{content:"";position:absolute;left:-80px;bottom:60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(242,168,29,.35),transparent 70%)}
 #about>*{position:relative;z-index:1}
-@keyframes spin{to{transform:rotate(360deg)}}
 .about-photo{box-shadow:10px 10px 0 var(--gold)}
 .about-glance .ag-grid>div,.about-body .ag-grid>div{background:rgba(255,255,255,.75);backdrop-filter:blur(2px)}
 /* OJT company spotlight */
@@ -1260,7 +1258,7 @@ nav{height:56px}
 #rs-toast a{color:var(--gold)}
 .foot-priv{flex-basis:100%;text-align:center;font-size:.72rem;opacity:.75;line-height:1.5;margin-top:.5rem}
 footer{flex-wrap:wrap}
-@media(prefers-reduced-motion:reduce){#about:before{animation:none}.wk-panel.pop{animation:none}}
+@media(prefers-reduced-motion:reduce){.wk-panel.pop{animation:none}}
 
 /* Home: show the whole top of the hero with a little breathing room */
 #hero{padding-top:1rem;scroll-margin-top:56px}
@@ -1276,6 +1274,38 @@ footer{flex-wrap:wrap}
 .rf-desk figcaption{font-size:.85rem;line-height:1.5;color:rgba(255,255,255,.75);padding-top:1.1rem}
 .rf-desk figcaption b{display:block;color:#fff;font-size:.95rem;margin-bottom:.15rem}
 @media(max-width:700px){.rf-desk-grid{grid-template-columns:1fr;gap:2rem}.rf-desk figure img{box-shadow:7px 7px 0 var(--red)}}
+
+/* ===== NAVIGATION + RESPONSIVE FIXES (final pass) ===== */
+:root{--nav-h:56px}
+/* One consistent offset so every section lands just under the fixed nav */
+html{scroll-padding-top:var(--nav-h);-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{overflow-x:clip}
+#hero,#about,#skills,#featured,#ojt,#projects,#certifications,#seminars,#contact,#reflections{scroll-margin-top:0}
+#about-vits,#ojt-did,#ojt-sample,#ojt-it,#shot-orgchart,[id^="proj-"],#company,#growth{scroll-margin-top:24px}
+/* Phones: 100vh is taller than the visible area when the browser bar shows */
+#hero{min-height:calc(100vh - var(--nav-h));min-height:calc(100svh - var(--nav-h))}
+/* Active section highlight */
+.nav-links a.active{color:var(--black);background:var(--off);box-shadow:inset 0 -3px 0 var(--red)}
+.nav-links a:focus-visible,.hamburger:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+/* Small laptops / tablets in landscape: keep the full menu, just tighter */
+@media(min-width:901px) and (max-width:1100px){
+  nav{padding:0 1.25rem}
+  .nav-links a{padding:0 .62rem;font-size:.64rem;letter-spacing:.1em}
+}
+/* Phones and portrait tablets */
+@media(max-width:900px){
+  .nav-links{height:auto;top:var(--nav-h);max-height:calc(100vh - var(--nav-h));max-height:calc(100dvh - var(--nav-h));overflow-y:auto;overscroll-behavior:contain;box-shadow:0 14px 28px rgba(0,0,0,.10)}
+  .nav-links a{padding:1.05rem 1.5rem;font-size:.78rem}
+  .nav-links a.active{box-shadow:inset 4px 0 0 var(--red)}
+  .hamburger{width:44px;height:44px;align-items:center;justify-content:center;margin-right:-.6rem}
+}
+/* Big monitors: keep content in a readable column instead of stretching edge to edge */
+@media(min-width:901px){
+  #about,#skills,#projects,#certifications,#seminars{padding-left:max(4rem,calc((100% - 1360px)/2));padding-right:max(4rem,calc((100% - 1360px)/2))}
+}
+@media(min-width:1700px){
+  nav{padding-left:max(3rem,calc((100% - 1560px)/2));padding-right:max(3rem,calc((100% - 1560px)/2))}
+}
 </style>
 </head>
 <body>
@@ -1285,10 +1315,10 @@ footer{flex-wrap:wrap}
   <a class="nav-issue" href="#hero" aria-label="Back to home">
     <img src="logo.png" alt="Jorich Logo" />
   </a>
-  <button class="hamburger" aria-label="Toggle menu">
+  <button class="hamburger" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links">
     <span></span><span></span><span></span>
   </button>
-  <ul class="nav-links">
+  <ul class="nav-links" id="nav-links">
     <li><a href="#hero">Home</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -2034,14 +2064,7 @@ footer{flex-wrap:wrap}
     requestAnimationFrame(tick);
   });
 
-  // Hamburger
-  const ham = document.querySelector('.hamburger');
-  const nav = document.querySelector('.nav-links');
-  if (ham) {
-    ham.addEventListener('click', () => { ham.classList.toggle('active'); nav.classList.toggle('active'); });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { ham.classList.remove('active'); nav.classList.remove('active'); }));
-    document.addEventListener('click', e => { if (!e.target.closest('nav')) { ham.classList.remove('active'); nav.classList.remove('active'); } });
-  }
+  // (Hamburger menu + navigation handled in the navigation script below)
 
   // Lightbox
   const overlay = document.getElementById('lightbox-overlay');
@@ -2051,6 +2074,7 @@ footer{flex-wrap:wrap}
   function openLb(src, alt) { lbImg.src = src; lbCap.textContent = alt || ''; overlay.classList.add('visible'); document.body.style.overflow = 'hidden'; }
   function closeLb() { overlay.classList.remove('visible'); document.body.style.overflow = ''; lbImg.src = ''; }
   document.querySelectorAll('img').forEach(img => {
+    if (img.closest('a')) return;
     img.style.cursor = 'zoom-in';
     img.addEventListener('click', e => { e.preventDefault(); openLb(img.src, img.alt); });
   });
@@ -2096,7 +2120,7 @@ document.querySelectorAll('.vid').forEach(function(box){
     box.querySelector('.sd-close').onclick=close;
     box.querySelectorAll('.sd-links a').forEach(function(a){a.addEventListener('click',function(e){
       var t=document.querySelector(a.getAttribute('href'));if(!t)return;e.preventDefault();
-      t.scrollIntoView({behavior:'smooth',block:'start'});
+      if(window.__goTo){window.__goTo(t);}else{t.scrollIntoView({behavior:'smooth',block:'start'});}
       t.classList.remove('jump-flash');void t.offsetWidth;t.classList.add('jump-flash');
       setTimeout(function(){t.classList.remove('jump-flash')},2600);
     });});
@@ -2162,13 +2186,107 @@ document.querySelectorAll('.vid').forEach(function(box){
 })();
 </script>
 <script>
-document.querySelectorAll('a[href="#hero"]').forEach(function(a){
-  a.addEventListener('click',function(e){
-    e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'});
-    var n=document.querySelector('.nav-links'),h=document.querySelector('.hamburger');
-    if(n&&n.classList.contains('active')){n.classList.remove('active');if(h)h.classList.remove('active');}
+/* Navigation: reliable anchor scrolling, mobile menu, active-section highlight.
+   Why custom scrolling? Photos lower on the page load lazily and change the page height while the
+   browser is mid-scroll, so a plain #link ends up short of (or past) its target. This scroller
+   re-measures the target on every frame, so it always lands on the right spot. */
+(function(){
+  var nav=document.querySelector('nav');
+  var menu=document.getElementById('nav-links');
+  var ham=document.querySelector('.hamburger');
+  var root=document.documentElement;
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var run=0;
+
+  function navH(){return nav?nav.offsetHeight:56;}
+  function targetY(t){
+    if(t.id==='hero')return 0;
+    var m=parseFloat(getComputedStyle(t).scrollMarginTop)||0;
+    return Math.max(0,Math.round(t.getBoundingClientRect().top+window.pageYOffset-navH()-m));
+  }
+  function ease(k){return k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;}
+
+  function goTo(t,instant){
+    var id=++run, startY=window.pageYOffset, t0=performance.now();
+    var dist=Math.abs(targetY(t)-startY);
+    var dur=(reduce||instant)?0:Math.min(1100,Math.max(350,dist*.22));
+    var prev=root.style.scrollBehavior;
+    root.style.scrollBehavior='auto';              // our animation drives the scroll, not CSS
+    var stop=function(){run++;};                    // user grabbed the wheel/screen: stop fighting them
+    var evs=['wheel','touchstart','keydown','mousedown'];
+    evs.forEach(function(e){window.addEventListener(e,stop,{once:true,passive:true});});
+    function done(){root.style.scrollBehavior=prev;evs.forEach(function(e){window.removeEventListener(e,stop);});}
+    var settleUntil=0;
+    (function tick(now){
+      if(id!==run){done();return;}
+      var k=dur?Math.min(1,(now-t0)/dur):1;
+      var want=targetY(t);                          // re-measured every frame
+      var y=k<1?startY+(want-startY)*ease(k):want;
+      if(Math.abs(y-window.pageYOffset)>.5)window.scrollTo(0,y);
+      if(k<1){requestAnimationFrame(tick);return;}
+      if(!settleUntil)settleUntil=now+1600;         // keep correcting while late images finish loading
+      if(now<settleUntil){requestAnimationFrame(tick);return;}
+      done();
+    })(t0);
+    try{history.replaceState(null,'','#'+t.id);}catch(e){}
+  }
+  window.__goTo=goTo;
+
+  function setMenu(open){
+    if(!menu||!ham)return;
+    menu.classList.toggle('active',open);
+    ham.classList.toggle('active',open);
+    ham.setAttribute('aria-expanded',open?'true':'false');
+  }
+  if(ham&&menu){
+    ham.addEventListener('click',function(e){e.stopPropagation();setMenu(!menu.classList.contains('active'));});
+    document.addEventListener('click',function(e){if(!e.target.closest('nav'))setMenu(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false);});
+    window.addEventListener('resize',function(){if(window.innerWidth>900)setMenu(false);});
+  }
+
+  // Every in-page link (nav, hero card, buttons, skill links) goes through goTo
+  document.addEventListener('click',function(e){
+    if(e.defaultPrevented||e.button||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    var a=e.target.closest&&e.target.closest('a[href^="#"]');
+    if(!a)return;
+    var id=decodeURIComponent(a.getAttribute('href').slice(1));
+    var t=id&&document.getElementById(id);
+    if(!t)return;
+    e.preventDefault();
+    setMenu(false);
+    goTo(t);
   });
-});
+
+  // Opening the page with a #section in the address (or using Back/Forward)
+  window.addEventListener('hashchange',function(){
+    var t=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if(t)goTo(t,true);
+  });
+  if(location.hash.length>1){
+    var first=document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if(first)window.addEventListener('load',function(){goTo(first,true);});
+  }
+
+  // Highlight the section you are in
+  var items=[].slice.call(document.querySelectorAll('.nav-links a[href^="#"]')).map(function(a){
+    return{a:a,t:document.getElementById(a.getAttribute('href').slice(1))};
+  }).filter(function(x){return x.t;});
+  var queued=false;
+  function spy(){
+    queued=false;
+    var line=navH()+Math.min(window.innerHeight*.35,260), cur=items[0];
+    items.forEach(function(x){if(x.t.getBoundingClientRect().top<=line)cur=x;});
+    if(window.innerHeight+window.pageYOffset>=root.scrollHeight-4)cur=items[items.length-1];
+    items.forEach(function(x){
+      var on=x===cur;x.a.classList.toggle('active',on);
+      if(on)x.a.setAttribute('aria-current','true');else x.a.removeAttribute('aria-current');
+    });
+  }
+  window.addEventListener('scroll',function(){if(!queued){queued=true;requestAnimationFrame(spy);}},{passive:true});
+  window.addEventListener('resize',spy);
+  spy();
+})();
 </script>
 </body>
 </html>
