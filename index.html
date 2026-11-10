@@ -1366,6 +1366,22 @@ body{overflow-x:clip}
 @media(max-width:900px){.ct-wrap{grid-template-columns:1fr}}
 @media(max-width:520px){.ct-row{grid-template-columns:1fr auto;gap:.2rem 1rem;padding:1.1rem .5rem}.ct-k{grid-column:1/-1}.ct-cta{display:block;text-align:center}}
 @media(prefers-reduced-motion:reduce){.ct-status i{animation:none}}
+
+/* ===== EMAIL CHOOSER ===== */
+.mail-dialog{border:2px solid var(--black);padding:0;width:min(92vw,460px);margin:auto;background:var(--white);color:var(--black);box-shadow:10px 10px 0 var(--gold)}
+.mail-dialog::backdrop{background:rgba(13,12,11,.7)}
+.md-head{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.25rem;background:var(--black);color:#fff}
+.md-head h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.7rem;letter-spacing:.03em;line-height:1}
+.md-close{width:2.5rem;height:2.5rem;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;font-size:.9rem;cursor:pointer}
+.md-close:hover{background:var(--red);border-color:var(--red)}
+.md-sub{padding:1rem 1.25rem .4rem;font-size:.9rem;line-height:1.5;color:#3a3631;overflow-wrap:anywhere}
+.md-opts{display:grid;gap:.6rem;padding:.8rem 1.25rem 1.25rem}
+.md-opts a,.md-opts button{display:flex;flex-direction:column;gap:.1rem;text-align:left;font:inherit;color:var(--black);background:#fff;border:1px solid var(--black);padding:.8rem 1rem;min-height:56px;text-decoration:none;cursor:pointer;transition:background .2s,box-shadow .2s,transform .2s}
+.md-opts b{font-size:1rem}
+.md-opts span{font-size:.8rem;color:var(--muted)}
+.md-opts a:hover,.md-opts button:hover{background:var(--sun);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--red)}
+.md-opts a:focus-visible,.md-opts button:focus-visible,.md-close:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.md-opts button.done{background:#1f8f4e;color:#fff;border-color:#1f8f4e}.md-opts button.done span{color:#fff}
 </style>
 </head>
 <body>
@@ -2056,7 +2072,7 @@ body{overflow-x:clip}
       <h2 class="ct-title"><span>Let’s build</span><em>something reliable.</em></h2>
       <p class="ct-sub">Looking for an IT intern, a documentation lead, or a project manager? Send me a message. I’d love to hear what you’re working on.</p>
       <p class="ct-help">I can help with documentation, quality assurance, project management and systems support.</p>
-      <a class="ct-cta" href="mailto:enoria.jorich52@gmail.com?subject=Hello%20Jorich">Send an email</a>
+      <a class="ct-cta" id="ct-open" href="mailto:enoria.jorich52@gmail.com?subject=Hello%20Jorich" aria-haspopup="dialog">Send an email</a>
     </div>
 
     <div class="ct-list fade-in">
@@ -2085,6 +2101,22 @@ body{overflow-x:clip}
   <span>BSIT · PLV</span>
   <small class="foot-priv">Shared for academic purposes. Customer data, internal documents, evaluations and confidential system screens are not published; individual contributions are described as my own tasks.</small>
 </footer>
+
+<!-- EMAIL CHOOSER -->
+<dialog id="mail-dialog" class="mail-dialog" aria-labelledby="mail-title">
+  <div class="md-head">
+    <h3 id="mail-title">Send me an email</h3>
+    <button type="button" class="md-close" aria-label="Close">✕</button>
+  </div>
+  <p class="md-sub">Choose where to write your message to <b>enoria.jorich52@gmail.com</b></p>
+  <div class="md-opts">
+    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=enoria.jorich52%40gmail.com&amp;su=Hello%20Jorich" target="_blank" rel="noopener noreferrer"><b>Gmail</b><span>Opens a new message in your browser</span></a>
+    <a href="https://outlook.live.com/mail/0/deeplink/compose?to=enoria.jorich52%40gmail.com&amp;subject=Hello%20Jorich" target="_blank" rel="noopener noreferrer"><b>Outlook</b><span>Opens a new message in your browser</span></a>
+    <a href="https://compose.mail.yahoo.com/?to=enoria.jorich52%40gmail.com&amp;subject=Hello%20Jorich" target="_blank" rel="noopener noreferrer"><b>Yahoo Mail</b><span>Opens a new message in your browser</span></a>
+    <a href="mailto:enoria.jorich52@gmail.com?subject=Hello%20Jorich"><b>Mail app</b><span>Uses the email app on your device</span></a>
+    <button type="button" class="md-copy" data-addr="enoria.jorich52@gmail.com"><b>Copy address</b><span>Paste it into any email service</span></button>
+  </div>
+</dialog>
 
 <!-- LIGHTBOX -->
 <div id="lightbox-overlay" class="lightbox-overlay">
@@ -2360,6 +2392,24 @@ document.querySelectorAll('.vid').forEach(function(box){
       function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok();}catch(e){}ta.remove();}
       if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fb);}else{fb();}
     });
+  });
+})();
+</script>
+<script>
+(function(){
+  var dlg=document.getElementById('mail-dialog'), open=document.getElementById('ct-open');
+  if(!dlg||!open||typeof dlg.showModal!=='function')return;   // old browser: the normal mailto link still works
+  open.addEventListener('click',function(e){e.preventDefault();dlg.showModal();});
+  dlg.querySelector('.md-close').addEventListener('click',function(){dlg.close();});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close();});           // click outside to close
+  dlg.querySelectorAll('.md-opts a').forEach(function(a){a.addEventListener('click',function(){setTimeout(function(){dlg.close();},150);});});
+  // the dialog's Copy button (the shared handler only covers .ct-copy), with a visible confirmation
+  var cp=dlg.querySelector('.md-copy');
+  if(cp)cp.addEventListener('click',function(){
+    var txt=cp.getAttribute('data-addr'),lab=cp.querySelector('b'),sub=cp.querySelector('span'),o1=lab.textContent,o2=sub.textContent;
+    function ok(){cp.classList.add('done');lab.textContent='Copied';sub.textContent='Address copied to your clipboard';setTimeout(function(){cp.classList.remove('done');lab.textContent=o1;sub.textContent=o2;},2000);}
+    function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';dlg.appendChild(ta);ta.select();try{document.execCommand('copy');ok();}catch(e){}ta.remove();}
+    if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fb);}else{fb();}
   });
 })();
 </script>
