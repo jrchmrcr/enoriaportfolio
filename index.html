@@ -1141,6 +1141,31 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 .rf-shift p{font-family:'Cormorant Garamond',serif;font-size:1.45rem;line-height:1.4;color:#fff;margin-top:.4rem}
 .rf-shift em{color:var(--red)}
 @media(max-width:760px){.rf-row{grid-template-columns:1fr;gap:.6rem}.rf-row .ar{transform:rotate(90deg);width:1.4rem}}
+
+/* ===== Responsive safety pass (phones, tablets, laptops) ===== */
+html,body{max-width:100%;overflow-x:hidden}
+img,video,iframe{max-width:100%}
+@media(max-width:900px){
+  .hero-infobar .ib-ctas{flex-direction:row;flex-wrap:wrap;gap:.6rem}
+  .hero-infobar .ib-ctas a{flex:1 1 150px;white-space:normal;min-width:0}
+}
+@media(max-width:600px){
+  .hero-infobar .ib-ctas{flex-direction:column;padding:1rem 1.5rem 1.25rem}
+  .hero-infobar .ib-ctas a{flex:none;width:100%}
+  .hero-type-block{padding:0 1rem}
+  .hero-row{min-width:0}
+  .hero-row .big-word{font-size:clamp(2.8rem,18vw,5.5rem)}
+  .hero-row .serif-word{font-size:clamp(2.6rem,15vw,5rem)}
+  .hero-photo-slot{margin:0 .5rem}
+  .section-masthead{flex-wrap:wrap;gap:.35rem 1rem;margin-bottom:2rem}
+  .section-masthead .display{font-size:clamp(1.9rem,10vw,3rem);min-width:0;overflow-wrap:anywhere}
+  .section-masthead .section-label-right{flex-basis:100%;margin-left:0;order:3}
+  .feature h3{overflow-wrap:anywhere}
+}
+@media(max-width:480px){
+  .hero-row .row-label{display:none}
+  .hero-row .big-word{font-size:clamp(2.6rem,16.5vw,4.5rem)}
+}
 </style>
 </head>
 <body>
