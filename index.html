@@ -674,14 +674,15 @@
     .lightbox-overlay {
       position: fixed; inset: 0;
       display: none; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.9); z-index: 9999; padding: 2rem;
+      background: rgba(0,0,0,0.9); z-index: 9999; padding: 1rem;
+      box-sizing: border-box; overflow: hidden;
     }
     .lightbox-overlay.visible { display: flex; }
-    .lightbox-content { position: relative; max-width: 100%; max-height: 100%; }
-    .lightbox-img { max-width: 92vw; max-height: 92vh; display: block; object-fit: contain; }
-    .lightbox-caption { margin-top: 0.75rem; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+    .lightbox-content { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 100%; max-height: 100%; margin: 0 auto; }
+    .lightbox-img { width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 7rem); max-height: calc(100dvh - 7rem); display: block; margin: 0 auto; object-fit: contain; }
+    .lightbox-caption { margin-top: 0.75rem; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; max-width: 100%; padding: 0 .5rem; }
     .lightbox-close {
-      position: absolute; top: -12px; right: -12px;
+      position: absolute; top: 8px; right: 8px; z-index: 2;
       background: #fff; border-radius: 2px; padding: 5px 9px;
       cursor: pointer; font-weight: 700; color: #111; font-size: 0.9rem;
       border: none;
@@ -1087,6 +1088,10 @@ mark.hl{background:linear-gradient(transparent 55%,rgba(192,57,43,.3) 55%)}
 .sd-links a:hover{background:var(--black);color:#fff}
 .sd-close{position:absolute;top:.8rem;right:.9rem;background:none;border:1px solid var(--rule);width:2rem;height:2rem;cursor:pointer;font-size:.8rem;color:var(--black);transition:background .2s,color .2s}
 .sd-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+/* detail panel lives inside the grid, right under the clicked row */
+.skills-magazine>.skill-detail{grid-column:1/-1;margin:1.2rem 10px 1.6rem 1rem}
+.skills-magazine.has-detail .skill-col:nth-last-child(2){border-right:none}
+@media(max-width:600px){.skills-magazine>.skill-detail{margin:1rem 8px 1.4rem 1rem}}
 @media(max-width:600px){.skill-detail{grid-template-columns:1fr;padding:1.4rem}.sd-main h3{font-size:1.8rem}}
 .bridge div{position:relative;transition:background .25s}
 .bridge div:hover{background:var(--off)}
@@ -1257,6 +1262,19 @@ nav{height:56px}
 #rs-toast a{color:var(--gold)}
 .foot-priv{flex-basis:100%;text-align:center;font-size:.72rem;opacity:.75;line-height:1.5;margin-top:.5rem}
 footer{flex-wrap:wrap}
+.wk-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.wk-chips .wk-chip{min-width:0;width:100%;padding:.7rem .4rem;text-align:center}
+.wk-chip[hidden]{display:none}
+@media(min-width:521px){.wk-chips{grid-template-columns:repeat(6,1fr)}}
+.wk-pager{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-top:1rem;position:relative}
+.wk-pager button{width:2.6rem;height:2.6rem;font:700 1.3rem/1 'Figtree',sans-serif;background:var(--black);color:#fff;border:1px solid var(--black);cursor:pointer;transition:background .2s}
+.wk-pager button:hover:not(:disabled){background:var(--red);border-color:var(--red)}
+.wk-pager button:disabled{opacity:.3;cursor:default}
+.wk-pinfo{display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.wk-pinfo b{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase}
+.wk-dots{display:flex;gap:.4rem}
+.wk-dots i{width:9px;height:9px;border-radius:50%;background:rgba(0,0,0,.18);cursor:pointer;transition:background .2s,transform .2s}
+.wk-dots i.on{background:var(--red);transform:scale(1.25)}
 @media(prefers-reduced-motion:reduce){.wk-panel.pop{animation:none}}
 
 /* Home: show the whole top of the hero with a little breathing room */
@@ -1715,6 +1733,11 @@ body{overflow-x:clip}
   <p class="wk-intro">Pick a week to see what I worked on and the new skill I picked up. Colors show the main focus.</p>
   <ul class="wk-legend" id="wk-legend"></ul>
   <div class="wk-chips" id="wk-chips" role="tablist" aria-label="Choose a week"></div>
+  <div class="wk-pager" id="wk-pager" aria-label="Week pages">
+    <button type="button" id="wk-pprev" aria-label="Previous weeks">‹</button>
+    <div class="wk-pinfo"><b id="wk-prange">Weeks 4–9</b><span class="wk-dots" id="wk-dots"></span></div>
+    <button type="button" id="wk-pnext" aria-label="More weeks">›</button>
+  </div>
   <div class="wk-journey" aria-hidden="true"><span id="wk-bar"></span><em id="wk-pct">0%</em></div>
   <article class="wk-panel" id="wk-panel" aria-live="polite">
     <div class="wk-ghost" id="wk-ghost">04</div>
@@ -2194,12 +2217,30 @@ document.querySelectorAll('.vid').forEach(function(box){
   ];
   var cols=document.querySelectorAll('.skill-col[data-skill]'),box=document.getElementById('skill-detail'),cur=-1;
   if(!box)return;
-  function close(){box.hidden=true;box.innerHTML='';cols.forEach(function(c){c.classList.remove('active');c.setAttribute('aria-expanded','false');var b=c.querySelector('.skill-more b');if(b)b.textContent='+';});cur=-1;}
+  var grid=document.querySelector('.skills-magazine');
+  function place(i){
+    // put the panel in the grid, right after the last card of the clicked card's row
+    var n=getComputedStyle(grid).gridTemplateColumns.split(' ').length||1;
+    var end=Math.min(Math.floor(i/n)*n+n-1,cols.length-1);
+    cols.forEach(function(c,k){c.style.order=k*2;});
+    box.style.order=end*2+1;
+    if(box.parentNode!==grid)grid.appendChild(box);
+    grid.classList.add('has-detail');
+  }
+  function unplace(){
+    cols.forEach(function(c){c.style.order='';});
+    box.style.order='';
+    grid.classList.remove('has-detail');
+    grid.insertAdjacentElement('afterend',box);
+  }
+  window.addEventListener('resize',function(){if(cur>-1)place(cur);});
+  function close(){unplace();box.hidden=true;box.innerHTML='';cols.forEach(function(c){c.classList.remove('active');c.setAttribute('aria-expanded','false');var b=c.querySelector('.skill-more b');if(b)b.textContent='+';});cur=-1;}
   function open(i){
     if(cur===i){close();return;}
     var d=D[i];
     box.innerHTML='<button class="sd-close" aria-label="Close">✕</button><div class="sd-ico">'+d.i+'</div><div class="sd-main"><span class="sd-kick">Skill '+String(i+1).padStart(2,'0')+'</span><h3>'+d.t+'</h3><p class="sd-lead">'+d.p+'</p><ul>'+d.b.map(function(x){return'<li>'+x+'</li>'}).join('')+'</ul><div class="sd-links">'+d.l.map(function(x){return'<a href="'+x[1]+'">'+x[0]+' →</a>'}).join('')+'</div></div>';
     box.hidden=false;
+    place(i);
     cols.forEach(function(c,k){var on=k===i;c.classList.toggle('active',on);c.setAttribute('aria-expanded',on);var b=c.querySelector('.skill-more b');if(b)b.textContent=on?'−':'+';});
     cur=i;
     box.querySelector('.sd-close').onclick=close;
@@ -2222,7 +2263,20 @@ document.querySelectorAll('.vid').forEach(function(box){
   var CATS={"onb": ["Onboarding", "#2b59c3"], "sap": ["SAP and quotations", "#d8342b"], "it": ["IT support", "#0f7b8a"], "cre": ["Creative work", "#e8a317"], "data": ["Data and inventory", "#2e8b57"], "mile": ["Milestone", "#7b3fa0"]}, WEEKS=[{"n": 4, "d": "Jun 29 – Jul 4", "c": "onb", "t": "Orientation and first lessons", "x": "I attended the company orientation and workplace tour and learned how the Parts Department operates. I started encoding part numbers and checking prices in the parts management system, practiced processing purchase requisitions in the Toyota Parts System, encoded employee data in Excel and helped edit a marketing poster.", "k": "Toyota Parts System", "g": ["Orientation", "Parts System", "Excel", "Poster editing"]}, {"n": 5, "d": "Jul 6 – 11", "c": "sap", "t": "Hello, SAP", "x": "I began handling SAP to process client parts requisitions and encoded SAP data in Excel for documentation. I helped fix printers in the service department, and on July 8 I learned how to invoice orders and create Sales Quotations (SQ) for Marketing Professionals.", "k": "SAP requisitions and quotations", "g": ["SAP", "Sales Quotations", "Excel", "Printer support"]}, {"n": 6, "d": "Jul 13 – 18", "c": "it", "t": "Beyond the Parts Department", "x": "I kept processing requisitions and started helping with part number creation. On July 14 I attended the Toyota General Assembly. I also did IT support: formatting system units, installing Windows, setting up computers, managing IPs and replacing system units, and I helped organize showroom items for a product display.", "k": "IT support and IP management", "g": ["General Assembly", "Windows setup", "IP management", "Part numbers"]}, {"n": 7, "d": "Jul 20 – 25", "c": "sap", "t": "Back-orders and SOPH forms", "x": "I created Sales Quotations and part numbers, ordered requested parts through SAP and encoded customer transaction data from SAP into Excel. I prepared customer information slips, created SOPH forms for back-ordered parts using SAP and Word, and replaced toner cartridges for Samsung printers in the Cashier and Service Departments.", "k": "SOPH forms for back-ordered parts", "g": ["SAP", "SOPH forms", "Word", "Toner replacement"]}, {"n": 8, "d": "Jul 27 – Aug 1", "c": "sap", "t": "Hands-on with accessories", "x": "I continued the daily SAP tasks and recorded customer transaction details in Excel for proper documentation. I also gained hands-on experience installing vehicle accessories such as luggage trays and side visors, and supported replacing a Samsung printer cartridge in the Service Department.", "k": "Installing vehicle accessories", "g": ["SAP", "Excel records", "Accessories", "Printer support"]}, {"n": 9, "d": "Aug 3 – 8", "c": "data", "t": "Inventory and incentive records", "x": "I monitored and updated parts inventory, prepared Sales Quotations in SAP, processed client requests for parts and supported part number creation. I also encoded customer transaction details for incentive records in Excel using data from SAP.", "k": "Incentive record encoding", "g": ["Inventory", "SAP", "Excel", "Customer slips"]}, {"n": 10, "d": "Aug 10 – 15", "c": "cre", "t": "Canva and the FJ Cruiser price list", "x": "I processed requested parts through SAP, kept inventory records updated and prepared customer information slips and quotations. I edited the Parts Department organizational chart in Canva and updated the accessories price list for the FJ Cruiser.", "k": "Designing in Canva", "g": ["Canva", "Org chart", "Price list", "SAP"]}, {"n": 11, "d": "Aug 17 – 22", "c": "cre", "t": "On camera", "x": "I kept up with SAP processing, inventory records and part numbering. On August 22 I took part in a parts promotional video as an on-camera actor, and I encoded PSI data to make sure the information was properly recorded.", "k": "On-camera work and PSI encoding", "g": ["Promo video", "PSI data", "SAP", "Inventory"]}, {"n": 12, "d": "Aug 24 – 29", "c": "data", "t": "Verifying back-orders", "x": "I updated and organized PSI records and verified back-ordered parts in SAP to confirm that pending orders were accurate. I reviewed stock levels, prepared customer information forms and supported warehouse operations by posting goods and releasing oils and other parts to the mechanics.", "k": "Releasing parts to mechanics", "g": ["Back-orders", "PSI records", "Warehouse", "Goods posting"]}, {"n": 14, "d": "Sep 7 – 12", "c": "data", "t": "Posting goods in SAP", "x": "I processed parts requests and SAP transactions, checked inventory levels and was guided on how to post goods in SAP so received items are properly processed. I helped prepare and release parts for specific mechanic orders, checking inventory in the morning and afternoon.", "k": "Goods posting in SAP", "g": ["Goods posting", "Inventory", "Mechanic orders", "SAP"]}, {"n": 15, "d": "Sep 14 – 19", "c": "data", "t": "Checking parts availability", "x": "I checked parts availability in the Parts System by entering part numbers, monitored inventory levels in the morning and afternoon and encoded customer information from SAP records into Excel. I also posted received goods in SAP and prepared parts for the mechanics.", "k": "Parts System availability checks", "g": ["Parts System", "Inventory", "Excel", "Goods posting"]}, {"n": 16, "d": "Sep 21 – 26", "c": "data", "t": "A steady daily routine", "x": "I continued posting received goods in SAP, verifying parts availability, monitoring inventory and helping provide parts for mechanic orders. I encoded customer information into Excel, along with the daily delivered items from the TMP records.", "k": "TMP delivery encoding", "g": ["TMP records", "Goods posting", "Excel", "Inventory"]}, {"n": 17, "d": "Sep 28 – Oct 3", "c": "data", "t": "More records, more trust", "x": "I encoded customer details from SAP into Excel, verified the availability of requested parts and monitored inventory at different times of the day. On October 3 I encoded BP monitoring data in Excel and recorded the pulled-out parts.", "k": "BP monitoring records", "g": ["BP monitoring", "Excel", "Parts System", "SAP"]}, {"n": 18, "d": "Oct 5 – 10", "c": "data", "t": "Consistency", "x": "I kept assisting the mechanics by preparing and providing the required parts, verifying availability in the Parts System and posting goods in SAP. I also encoded customer details from SAP into Excel and monitored inventory throughout the day.", "k": "Working steadily and accurately", "g": ["Mechanic support", "Goods posting", "Excel", "Inventory"]}, {"n": 19, "d": "Oct 12 – 17", "c": "data", "t": "Running on routine", "x": "I continued posting goods in SAP, monitoring inventory at different times of the day, verifying requested parts and assisting the mechanics with the parts they needed, while encoding customer details from SAP into Excel.", "k": "Working steadily and accurately", "g": ["Goods posting", "Inventory", "Parts System", "Excel"]}, {"n": 20, "d": "Oct 19 – 24", "c": "mile", "t": "The OJT visitation", "x": "I continued my routine tasks in the Parts Department. On October 22 I took part in the OJT visitation, which included a brief interview with the HR representative and the OJT coordinator, and a photo opportunity with the certificate.", "k": "Speaking up in a professional interview", "g": ["OJT visitation", "HR interview", "Certificate", "Routine tasks"]}, {"n": 21, "d": "Oct 26 – 31", "c": "data", "t": "Down the home stretch", "x": "I kept assisting the mechanics, verifying the availability of requested parts, posting goods in SAP, monitoring inventory levels throughout the day and encoding customer details from SAP into Excel.", "k": "Working steadily and accurately", "g": ["Goods posting", "Inventory", "Parts System", "Excel"]}, {"n": 22, "d": "Nov 2 – 5", "c": "mile", "t": "Final week and final day", "x": "This was my final week at Toyota Valenzuela. I kept up my daily inventory monitoring, goods posting, parts verification, preparing parts for the mechanics and encoding customer details into Excel, and completed my final day of On-the-Job Training on November 5, 2026.", "k": "A completed OJT", "g": ["Final day", "Inventory", "SAP", "Excel"]}];
   var chips=document.getElementById('wk-chips'); if(!chips) return;
   var legend=document.getElementById('wk-legend'), panel=document.getElementById('wk-panel');
-  var idx=0, btns=[];
+  var idx=0, btns=[], PER=6, page=0, pages=Math.ceil(WEEKS.length/PER);
+  var dots=document.getElementById('wk-dots');
+  for(var pi=0;pi<pages;pi++){(function(pi){var d=document.createElement('i'); d.addEventListener('click',function(){ setPage(pi); }); dots.appendChild(d);})(pi);}
+  function setPage(p){
+    page=Math.max(0,Math.min(pages-1,p));
+    btns.forEach(function(b,j){ b.hidden=(Math.floor(j/PER)!==page); });
+    var a=WEEKS[page*PER].n, z=WEEKS[Math.min(WEEKS.length,(page+1)*PER)-1].n;
+    document.getElementById('wk-prange').textContent='Weeks '+a+'–'+z;
+    Array.prototype.forEach.call(dots.children,function(d,k){ d.classList.toggle('on',k===page); });
+    document.getElementById('wk-pprev').disabled=(page===0);
+    document.getElementById('wk-pnext').disabled=(page===pages-1);
+  }
+  document.getElementById('wk-pprev').addEventListener('click',function(){ setPage(page-1); });
+  document.getElementById('wk-pnext').addEventListener('click',function(){ setPage(page+1); });
   Object.keys(CATS).forEach(function(k){ var li=document.createElement('li'); li.innerHTML='<i style="background:'+CATS[k][1]+'"></i>'+CATS[k][0]; legend.appendChild(li); });
   WEEKS.forEach(function(w,i){
     var b=document.createElement('button'); b.type='button'; b.className='wk-chip'; b.setAttribute('role','tab');
@@ -2231,6 +2285,7 @@ document.querySelectorAll('.vid').forEach(function(box){
   });
   function show(i){
     idx=i; var w=WEEKS[i], c=CATS[w.c];
+    var np=Math.floor(i/PER); if(np!==page) setPage(np);
     btns.forEach(function(b,j){ b.classList.toggle('on',j===i); b.classList.toggle('done',j<i); b.setAttribute('aria-selected',j===i); });
     panel.style.setProperty('--c',c[1]);
     document.getElementById('wk-ghost').textContent=('0'+w.n).slice(-2);
@@ -2248,7 +2303,7 @@ document.querySelectorAll('.vid').forEach(function(box){
   }
   document.getElementById('wk-prev').addEventListener('click',function(){ if(idx>0) show(idx-1); });
   document.getElementById('wk-next').addEventListener('click',function(){ if(idx<WEEKS.length-1) show(idx+1); });
-  show(0);
+  setPage(0); show(0);
 })();
 
 // Resume download with a friendly fallback
