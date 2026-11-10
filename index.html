@@ -1261,6 +1261,21 @@ nav{height:56px}
 .foot-priv{flex-basis:100%;text-align:center;font-size:.72rem;opacity:.75;line-height:1.5;margin-top:.5rem}
 footer{flex-wrap:wrap}
 @media(prefers-reduced-motion:reduce){#about:before{animation:none}.wk-panel.pop{animation:none}}
+
+/* Home: show the whole top of the hero with a little breathing room */
+#hero{padding-top:1rem;scroll-margin-top:56px}
+/* Reflections: desk photos */
+.rf-desk{margin-top:3.5rem}
+.rf-desk>small{display:block;font-size:.7rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem}
+.rf-desk h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(2rem,5vw,3.4rem);line-height:1;color:#fff;margin-bottom:1.4rem}
+.rf-desk h3 em{font-family:'Cormorant Garamond',serif;color:var(--gold)}
+.rf-desk-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6rem;align-items:start}
+.rf-desk figure{margin:0}
+.rf-desk figure img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;border:6px solid #fff6ec;box-shadow:10px 10px 0 var(--red)}
+.rf-desk figure:nth-child(2) img{object-position:60% 50%}
+.rf-desk figcaption{font-size:.85rem;line-height:1.5;color:rgba(255,255,255,.75);padding-top:1.1rem}
+.rf-desk figcaption b{display:block;color:#fff;font-size:.95rem;margin-bottom:.15rem}
+@media(max-width:700px){.rf-desk-grid{grid-template-columns:1fr;gap:2rem}.rf-desk figure img{box-shadow:7px 7px 0 var(--red)}}
 </style>
 </head>
 <body>
@@ -1689,6 +1704,15 @@ footer{flex-wrap:wrap}
         <div class="rf-card fade-in"><span class="n">02</span><h4>An all-around intern</h4><p>Because I was willing to learn everything, I got to do the work of the people around me: parts admin, quotations, part numbering, goods posting, and even IT support. In time, I could handle many of these tasks on my own, without needing their help.</p></div>
         <div class="rf-card fade-in"><span class="n">03</span><h4>Accuracy matters</h4><p>One wrong part number or posting can delay a mechanic’s order. Working in SAP taught me to double-check, verify, and own my results. This is the same discipline I bring to documentation and QA.</p></div>
         <div class="rf-card fade-in"><span class="n">04</span><h4>Say yes to the unexpected</h4><p>One day I was in SAP, the next I was installing Windows, fitting accessories on a vehicle, or appearing in a parts advertisement. Adaptability grows when you keep saying yes.</p></div>
+      </div>
+
+      <div class="rf-desk fade-in">
+        <small>A day at my desk</small>
+        <h3>Where the <em>accuracy</em> happened.</h3>
+        <div class="rf-desk-grid">
+          <figure><img src="ojt-desk-selfie.jpg" alt="Jorich at her desk in the Parts Department, resting her cheek on her hand" loading="lazy" decoding="async"/><figcaption><b>Parts Department desk</b>Another day with SAP, the Parts System and a stack of records to check.</figcaption></figure>
+          <figure><img src="ojt-excel-desk.jpg" alt="Jorich encoding records in Excel at her desk, with the screen blurred for confidentiality" loading="lazy" decoding="async"/><figcaption><b>Encoding in Excel</b>Matching every entry to its source record. Screen details are blurred for confidentiality.</figcaption></figure>
+        </div>
       </div>
 
       <div class="rf-it">
@@ -2136,6 +2160,15 @@ document.querySelectorAll('.vid').forEach(function(box){
     t.classList.add('show'); setTimeout(function(){ t.classList.remove('show'); },6000);
   }
 })();
+</script>
+<script>
+document.querySelectorAll('a[href="#hero"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'});
+    var n=document.querySelector('.nav-links'),h=document.querySelector('.hamburger');
+    if(n&&n.classList.contains('active')){n.classList.remove('active');if(h)h.classList.remove('active');}
+  });
+});
 </script>
 </body>
 </html>
