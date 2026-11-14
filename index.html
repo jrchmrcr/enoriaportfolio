@@ -670,23 +670,47 @@
     }
     footer span:first-child { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.1em; font-size: 0.85rem; }
 
-    /* ──────────────────────── LIGHTBOX ──────────────────────── */
-    .lightbox-overlay {
-      position: fixed; inset: 0;
-      display: none; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.9); z-index: 9999; padding: 1rem;
-      box-sizing: border-box; overflow: hidden;
-    }
-    .lightbox-overlay.visible { display: flex; }
-    .lightbox-content { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 100%; max-height: 100%; margin: 0 auto; }
-    .lightbox-img { width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 7rem); max-height: calc(100dvh - 7rem); display: block; margin: 0 auto; object-fit: contain; }
-    .lightbox-caption { margin-top: 0.75rem; text-align: center; color: rgba(255,255,255,0.7); font-size: 0.85rem; max-width: 100%; padding: 0 .5rem; }
-    .lightbox-close {
-      position: absolute; top: 8px; right: 8px; z-index: 2;
-      background: #fff; border-radius: 2px; padding: 5px 9px;
-      cursor: pointer; font-weight: 700; color: #111; font-size: 0.9rem;
-      border: none;
-    }
+/* ──────────────────────── LIGHTBOX ──────────────────────── */
+.lb{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:clamp(.75rem,3vw,2rem);
+  background:radial-gradient(circle at 15% 10%,rgba(242,168,29,.18),transparent 40%),radial-gradient(circle at 90% 90%,rgba(216,52,43,.25),transparent 45%),rgba(13,12,11,.92);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);overflow:hidden}
+.lb.open{display:flex;animation:lbFade .25s ease both}
+@keyframes lbFade{from{opacity:0}to{opacity:1}}
+
+.lb-stage{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.1rem;max-width:min(100%,1100px);max-height:100%;min-width:0}
+.lb.open .lb-stage{animation:lbZoom .35s cubic-bezier(.2,.8,.2,1) both}
+@keyframes lbZoom{from{opacity:0;transform:scale(.92) translateY(14px)}to{opacity:1;transform:none}}
+
+.lb-frame{position:relative;border:6px solid #fff6ec;background:#fff6ec;box-shadow:10px 10px 0 var(--red,#d8342b),0 24px 60px rgba(0,0,0,.5);line-height:0;max-width:100%}
+.lb-img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 14rem);max-height:calc(100dvh - 14rem);object-fit:contain;background:#000}
+.lb-img.swap{animation:lbSwap .3s ease both}
+@keyframes lbSwap{from{opacity:0;transform:translateX(var(--dx,20px))}to{opacity:1;transform:none}}
+
+.lb-count{position:absolute;top:-1px;left:-1px;z-index:2;background:var(--black,#0d0c0b);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;line-height:1;padding:.4rem .7rem}
+
+.lb-cap{width:100%;max-width:720px;background:#fff;color:var(--black,#0d0c0b);border-left:5px solid var(--red,#d8342b);padding:.9rem 1.2rem;box-shadow:6px 6px 0 var(--gold,#f2a81d);font-size:.95rem;line-height:1.5;text-align:left}
+.lb-cap b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.35rem;letter-spacing:.04em;line-height:1.1;color:var(--red,#d8342b);margin-bottom:.2rem}
+.lb-cap:empty{display:none}
+
+.lb-close,.lb-nav{position:absolute;z-index:3;display:grid;place-items:center;border:2px solid var(--black,#0d0c0b);background:#fff;color:var(--black,#0d0c0b);cursor:pointer;font:700 1.1rem/1 'Figtree',sans-serif;box-shadow:3px 3px 0 var(--red,#d8342b);transition:background .2s,color .2s,transform .2s,box-shadow .2s}
+.lb-close{top:clamp(.6rem,2vw,1.2rem);right:clamp(.6rem,2vw,1.2rem);width:46px;height:46px}
+.lb-nav{top:50%;width:48px;height:56px;margin-top:-28px;font-size:1.6rem}
+.lb-prev{left:clamp(.4rem,2vw,1.4rem)}
+.lb-next{right:clamp(.4rem,2vw,1.4rem)}
+.lb-close:hover,.lb-nav:hover{background:var(--red,#d8342b);color:#fff;border-color:var(--red,#d8342b);box-shadow:3px 3px 0 var(--black,#0d0c0b);transform:translate(-1px,-1px)}
+.lb-close:focus-visible,.lb-nav:focus-visible{outline:3px solid var(--gold,#f2a81d);outline-offset:3px}
+.lb-nav[hidden]{display:none}
+
+.lb-hint{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+
+@media(max-width:700px){
+  .lb-frame{border-width:4px;box-shadow:6px 6px 0 var(--red,#d8342b),0 16px 40px rgba(0,0,0,.5)}
+  .lb-img{max-height:calc(100vh - 15rem);max-height:calc(100dvh - 15rem)}
+  .lb-cap{font-size:.88rem;padding:.75rem 1rem}
+  .lb-nav{top:auto;bottom:1rem;margin-top:0;width:46px;height:46px}
+  .lb-hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){.lb.open,.lb.open .lb-stage,.lb-img.swap{animation:none}}
 
     /* ──────────────────────── FADE IN ──────────────────────── */
     .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.4s ease, transform 0.4s ease; will-change: opacity, transform; }
@@ -1400,6 +1424,48 @@ body{overflow-x:clip}
 .md-opts a:hover,.md-opts button:hover{background:var(--sun);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--red)}
 .md-opts a:focus-visible,.md-opts button:focus-visible,.md-close:focus-visible{outline:3px solid var(--red);outline-offset:2px}
 .md-opts button.done{background:#1f8f4e;color:#fff;border-color:#1f8f4e}.md-opts button.done span{color:#fff}
+
+/* ===== Privacy notice + source note ===== */
+.co-story>p.co-src{font-family:'Figtree',sans-serif;font-size:.8rem;line-height:1.55;color:var(--muted);margin:1.2rem 0 0;padding-top:.9rem;border-top:1px solid var(--rule)}
+.co-src a,.ojt-privacy a,#privacy a{color:var(--teal)}
+.wk-chips{grid-template-columns:repeat(3,1fr)}
+@media(min-width:521px){.wk-chips{grid-template-columns:repeat(5,1fr)}}
+#privacy{background:var(--off);padding:3rem clamp(1.25rem,5vw,4rem);border-top:1px solid var(--rule);scroll-margin-top:24px}
+.pv-in{max-width:900px;margin:0 auto}
+.pv-in h2{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:2rem;letter-spacing:.03em;margin-bottom:.3rem}
+.pv-in .pv-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.2rem}
+.pv-in h3{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:1.2rem 0 .3rem}
+.pv-in p,.pv-in li{font-size:.9rem;line-height:1.65;color:#3a3631}
+.pv-in ul{padding-left:1.1rem}
+
+/* ===== SAMPLE WORK CAROUSEL ===== */
+.gal.car{display:block;position:relative;counter-reset:none}
+.car-stage{position:relative;height:calc(min(620px,78vw)*.75 + 30px);overflow:hidden;outline:none;touch-action:pan-y}
+.car-stage:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.gal.car figure{position:absolute;left:50%;top:10px;width:min(620px,78vw);margin:0;grid-column:auto;cursor:pointer;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .45s,filter .45s,box-shadow .3s;will-change:transform,opacity}
+.gal.car figure:before{display:none}
+.gal.car figure:hover{box-shadow:none}
+.gal.car figure.is-active{cursor:zoom-in;box-shadow:10px 10px 0 var(--red)}
+.gal.car figure.is-active:hover{box-shadow:12px 12px 0 var(--black)}
+.gal.car figure img{aspect-ratio:4/3;border:3px solid #fff6ec;background:#000}
+.gal.car figcaption{display:none}
+.car-btn{position:absolute;top:calc(50% - 6px);z-index:30;width:48px;height:58px;margin-top:-29px;display:grid;place-items:center;background:#fff;color:var(--black);border:2px solid var(--black);box-shadow:3px 3px 0 var(--red);font:700 1.7rem/1 'Figtree',sans-serif;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.car-btn:hover{background:var(--red);color:#fff;border-color:var(--red);transform:translate(-1px,-1px)}
+.car-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.car-prev{left:0}.car-next{right:0}
+.car-cap{max-width:760px;margin:1.4rem auto 0;background:#fff;border-left:5px solid var(--red);box-shadow:6px 6px 0 var(--gold);padding:1rem 1.3rem;font-size:.95rem;line-height:1.5;min-height:5.2rem;animation:carIn .45s ease both}
+.car-cap b{display:block;font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:1.5rem;letter-spacing:.04em;line-height:1.1;color:var(--red)}
+@keyframes carIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.car-thumbs{display:flex;justify-content:center;gap:.6rem;margin-top:1.4rem;flex-wrap:wrap}
+.car-thumbs button{width:72px;height:54px;padding:0;border:2px solid var(--mid);background:#000;cursor:pointer;opacity:.55;overflow:hidden;transition:opacity .2s,transform .2s,border-color .2s}
+.car-thumbs button img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.car-thumbs button:hover{opacity:.9;transform:translateY(-3px)}
+.car-thumbs button.on{opacity:1;border-color:var(--red);transform:translateY(-4px);box-shadow:3px 3px 0 var(--red)}
+.car-thumbs button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.car-count{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;text-align:center;margin-top:1rem}
+@media(max-width:600px){.car-btn{width:40px;height:48px;margin-top:-24px;font-size:1.4rem}.car-thumbs button{width:54px;height:42px}.car-cap{font-size:.88rem}}
+@media(prefers-reduced-motion:reduce){.gal.car figure{transition:none}.car-cap{animation:none}}
 </style>
 </head>
 <body>
@@ -1701,10 +1767,7 @@ body{overflow-x:clip}
         <div class="co-story">
           <p>I spent my <mark class="hl">486-hour practicum</mark> inside Toyota Valenzuela Inc., inaugurated on <mark class="hl">June 28, 2019</mark> and the <mark class="hl">70th Toyota dealership in the Philippines</mark>. Under one roof it brings together vehicle sales, after-sales service and spare parts supply.</p>
           <p>I was placed in the <mark class="hl">Parts Department</mark>, where I worked in <mark class="hl">SAP</mark> every day and learned how a business system keeps parts, quotations and mechanics’ orders moving. SAP access is role-based, so I learned each function by working alongside the staff who handle it. I also supported the company’s IT Department when needed.</p>
-          <div class="co-mv">
-            <div><small>Mission</small><p>To excel in providing standards in sales and after service, building a culture of engaged team members that results in a delighted customer experience.</p></div>
-            <div><small>Vision</small><p>To be the excellent Toyota dealership where employees are happily engaged and customers are loyal and delighted.</p></div>
-          </div>
+          <p class="co-src">Company details (opening date, location, size, 3S format, 70th dealership) come from public sources: <a href="https://motioncars.inquirer.net/?p=60435" target="_blank" rel="noreferrer">Inquirer Motioncars</a> and the <a href="https://ph.jobstreet.com/companies/toyota-valenzuela-168557685679004" target="_blank" rel="noreferrer">Toyota Valenzuela company profile on JobStreet</a>.</p>
         </div>
         <div class="co-facts">
           <div class="co-big"><div><b>70th</b><span>Toyota dealership in the Philippines</span></div><div><b>5,300</b><span>sq m property</span></div><div><b>20,000</b><span>sq m floor area</span></div></div>
@@ -1713,8 +1776,7 @@ body{overflow-x:clip}
             <div><dt>Location</dt><dd>457 MacArthur Highway, Valenzuela City</dd></div>
             <div><dt>Department</dt><dd>Parts Department</dd></div>
             <div><dt>My role</dt><dd>OJT Intern · Parts Administration &amp; IT Support</dd></div>
-            <div><dt>Site supervisor</dt><dd>Ms. Mianca Rysabelle Bogas</dd></div>
-            <div><dt>Training period</dt><dd>June 29 – November 5, 2026</dd></div>
+                        <div><dt>Training period</dt><dd>June 29 – November 5, 2026</dd></div>
             <div><dt>Schedule</dt><dd>Monday – Saturday, 8:30 AM – 5:30 PM</dd></div>
             <div><dt>Hours completed</dt><dd>486</dd></div>
           </dl>
@@ -1728,25 +1790,25 @@ body{overflow-x:clip}
   <div><b>2</b><span>parts advertisement videos I was part of</span></div>
   <div><b>1</b><span>OJT visitation with Toyota HR and our PLV OJT coordinator</span></div>
 </div>
-<h3 class="ojt-h fade-in" id="growth">My Growth, Week by Week</h3>
+<h3 class="ojt-h fade-in" id="growth">My Growth, Phase by Phase</h3>
 <div class="wk fade-in" id="wk">
-  <p class="wk-intro">Pick a week to see what I worked on and the new skill I picked up. Colors show the main focus.</p>
+  <p class="wk-intro">Pick a phase to see, in general terms, what I worked on and the skill I picked up. Specific records and customer details are intentionally left out.</p>
   <ul class="wk-legend" id="wk-legend"></ul>
-  <div class="wk-chips" id="wk-chips" role="tablist" aria-label="Choose a week"></div>
+  <div class="wk-chips" id="wk-chips" role="tablist" aria-label="Choose a phase"></div>
   <div class="wk-pager" id="wk-pager" aria-label="Week pages">
     <button type="button" id="wk-pprev" aria-label="Previous weeks">‹</button>
-    <div class="wk-pinfo"><b id="wk-prange">Weeks 4–9</b><span class="wk-dots" id="wk-dots"></span></div>
+    <div class="wk-pinfo"><b id="wk-prange">Phases</b><span class="wk-dots" id="wk-dots"></span></div>
     <button type="button" id="wk-pnext" aria-label="More weeks">›</button>
   </div>
   <div class="wk-journey" aria-hidden="true"><span id="wk-bar"></span><em id="wk-pct">0%</em></div>
   <article class="wk-panel" id="wk-panel" aria-live="polite">
-    <div class="wk-ghost" id="wk-ghost">04</div>
+    <div class="wk-ghost" id="wk-ghost">01</div>
     <div class="wk-meta"><span class="wk-cat" id="wk-cat"></span><span class="wk-date" id="wk-date"></span></div>
     <h4 id="wk-title"></h4>
     <p id="wk-text"></p>
     <div class="wk-unlock"><i>✦</i><div><small>Skill unlocked</small><b id="wk-new"></b></div></div>
     <div class="wk-tags" id="wk-tags"></div>
-    <div class="wk-nav"><button type="button" id="wk-prev">← Previous week</button><button type="button" id="wk-next">Next week →</button></div>
+    <div class="wk-nav"><button type="button" id="wk-prev">← Previous phase</button><button type="button" id="wk-next">Next phase →</button></div>
   </article>
 </div>
 
@@ -1759,14 +1821,14 @@ body{overflow-x:clip}
         <li>Verified back-ordered parts so pending orders stayed accurate</li></ul></div>
       <div class="ojt-track"><div class="ot-top"><span class="ot-ico">🧾</span><span class="ot-n">3 tasks</span></div><h4>Quotations &amp; Accessories</h4><ul>
         <li>Learned from the parts accessories staff how to prepare Sales Quotations (SQ) for Marketing Professionals</li>
-        <li>Updated the FJ Cruiser accessories price list</li>
+        <li>Helped update the department’s accessories price list</li>
         <li>Gained hands-on experience installing accessories such as luggage trays and side visors</li></ul></div>
       <div class="ojt-track"><div class="ot-top"><span class="ot-ico">📊</span><span class="ot-n">5 tasks</span></div><h4>Data, Inventory &amp; Part Numbers</h4><ul>
         <li>Assisted the Service Counterman in creating part numbers for parts ordering</li>
         <li>Encoded SAP records into Excel for documentation</li>
         <li>Monitored inventory levels throughout the day</li>
         <li>Verified part availability in the Parts System</li>
-        <li>Maintained PSI, TMP delivery and BP monitoring records</li></ul></div>
+        <li>Maintained department delivery and monitoring records</li></ul></div>
       <div class="ojt-track" id="ojt-it"><div class="ot-top"><span class="ot-ico">🖥️</span><span class="ot-n">4 tasks</span></div><h4>IT Support</h4><ul>
         <li>Formatted system units and installed Windows 11</li>
         <li>Set up computer units and assisted with IP management</li>
@@ -1813,7 +1875,7 @@ body{overflow-x:clip}
       <figure><img src="ojt-completion.jpg" alt="Two interns holding their Certificates of Completion with the Toyota Valenzuela HR representative" loading="lazy" decoding="async"/><figcaption><b>Certificates of Completion</b>Where we received our certificates of completion, together with Toyota Valenzuela’s HR representative.</figcaption></figure>
       <figure><img src="ojt-batch.jpg" alt="The OJT batch at the dealership entrance" loading="lazy" decoding="async"/><figcaption><b>My OJT batch</b>All of us interns who trained together at Toyota Valenzuela.</figcaption></figure>
     </div>
-    <p class="ojt-privacy">Photos are published with the consent of the people pictured. Customer data, internal documents, supervisor evaluations and system screens are not shown, and the Excel image is blurred. Company background comes from Toyota Valenzuela's public company profile. The tasks listed are what I assisted with or handled as an intern.</p>
+    <p class="ojt-privacy">Photos and videos of other people are published with their consent. Customer data, employee data, internal documents, evaluations and system screens are not shown, and the Excel images are blurred. Weekly progress is summarized in general terms. Company background comes from public sources (see the links under Toyota Valenzuela above). The tasks listed are what I assisted with or handled as an intern. See the <a href="#privacy">Privacy Notice</a>.</p>
   </div>
   <div class="reflect" id="reflections">
     <div class="reflect-in">
@@ -1850,7 +1912,7 @@ body{overflow-x:clip}
         <h3 class="rf-it-title fade-in">What my practicum taught me <em>about IT.</em></h3>
         <p class="rf-it-lead fade-in">Coding was not part of my OJT. My growth came from working inside real systems, with real records, real people and real consequences.</p>
         <div class="rf-map">
-          <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Entering part numbers, quantities and customer details in SAP and the Toyota Parts System.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Data accuracy &amp; QA</h5><p>I rechecked every entry against its original record before saving. I now apply the same check in my IT subjects.</p></div></div>
+          <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Entering part numbers, quantities and order details in SAP and the Toyota Parts System.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Data accuracy &amp; QA</h5><p>I rechecked every entry against its original record before saving. I now apply the same check in my IT subjects.</p></div></div>
           <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Seeing how SAP gives each role its own access to requisitions, quotations, inventory and goods posting.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Information systems</h5><p>I saw how enterprise software supports transactions, inventory and customer records in a real business.</p></div></div>
           <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Formatting units, installing Windows, setting up computers and managing IP addresses.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Networking &amp; hardware</h5><p>My Cisco and networking lessons stopped being theory and became tools I used in a real office.</p></div></div>
           <div class="rf-row fade-in"><div class="l"><small>At work</small><p>Daily activity logs compiled into weekly progress reports with photo documentation.</p></div><span class="ar">→</span><div class="r"><small>In IT</small><h5>Documentation</h5><p>Recording my work every day mirrors professional practice, and it is the skill I want to build my career on.</p></div></div>
@@ -1989,7 +2051,6 @@ body{overflow-x:clip}
         <h3>ARTA Customer Satisfaction System</h3>
         <p>Flutter &amp; Supabase app automating ARTA surveys for Valenzuela City. 2025.</p>
         <div class="proj-tags"><span class="proj-tag">Flutter</span><span class="proj-tag">Supabase</span><span class="proj-tag">Mobile</span></div>
-        <a href="https://drive.google.com/drive/folders/1_hptyvoOac_e1Po7ZMrfqROec6cmSO62" target="_blank" rel="noreferrer" class="proj-link" style="display:inline-block;margin-top:1rem;">View presentation ↗</a>
       </div>
     </div>
     <div class="project-cell" id="proj-vits">
@@ -2118,12 +2179,29 @@ body{overflow-x:clip}
   </div>
 </section>
 
+<!-- PRIVACY NOTICE -->
+<section id="privacy" aria-labelledby="pv-title">
+  <div class="pv-in">
+    <h2 id="pv-title">Privacy Notice</h2>
+    <p class="pv-sub">A quick, friendly note about how this site handles information. Last updated November 2026.</p>
+
+    <h3>What I collect</h3>
+    <p>Nothing automatically. There are no forms, accounts, or tracking tools here. If you email me, I&rsquo;ll only use your message to reply to you. Questions about this notice can go to <a href="mailto:enoria.jorich52@gmail.com">enoria.jorich52@gmail.com</a>.</p>
+
+    <h3>Other sites</h3>
+    <p>The page loads Google Fonts, and some links take you to other sites like YouTube, Facebook, Credly, itch.io, Figma, and Google Drive. Those sites have their own privacy policies.</p>
+
+    <h3>Photos and videos</h3>
+    <p>Photos and videos with other people are shared with their consent, and I left out customer data, employee data, and confidential company information.</p>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
 <footer>
   <span>JMC ENORIA</span>
   <span>© 2026 · Valenzuela City, Philippines</span>
   <span>BSIT · PLV</span>
-  <small class="foot-priv">Shared for academic purposes. Customer data, internal documents, evaluations and confidential system screens are not published; individual contributions are described as my own tasks.</small>
+  <small class="foot-priv">Shared for academic purposes. Customer data, internal documents, evaluations and confidential system screens are not published; individual contributions are described as my own tasks. <a href="#privacy" style="color:inherit;text-decoration:underline">Privacy Notice</a></small>
 </footer>
 
 <!-- EMAIL CHOOSER -->
@@ -2143,11 +2221,17 @@ body{overflow-x:clip}
 </dialog>
 
 <!-- LIGHTBOX -->
-<div id="lightbox-overlay" class="lightbox-overlay">
-  <div class="lightbox-content">
-    <button class="lightbox-close" aria-label="Close">✕</button>
-    <img class="lightbox-img" src="" alt="" />
-    <div class="lightbox-caption"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb-close" type="button" aria-label="Close photo">✕</button>
+  <button class="lb-nav lb-prev" type="button" aria-label="Previous photo">‹</button>
+  <button class="lb-nav lb-next" type="button" aria-label="Next photo">›</button>
+  <div class="lb-stage">
+    <div class="lb-frame">
+      <span class="lb-count"></span>
+      <img class="lb-img" src="" alt="" />
+    </div>
+    <div class="lb-cap" aria-live="polite"></div>
+    <span class="lb-hint">← → to browse · Esc to close</span>
   </div>
 </div>
 
@@ -2175,21 +2259,95 @@ body{overflow-x:clip}
 
   // (Hamburger menu + navigation handled in the navigation script below)
 
-  // Lightbox
-  const overlay = document.getElementById('lightbox-overlay');
-  const lbImg = overlay.querySelector('.lightbox-img');
-  const lbCap = overlay.querySelector('.lightbox-caption');
-  const lbClose = overlay.querySelector('.lightbox-close');
-  function openLb(src, alt) { lbImg.src = src; lbCap.textContent = alt || ''; overlay.classList.add('visible'); document.body.style.overflow = 'hidden'; }
-  function closeLb() { overlay.classList.remove('visible'); document.body.style.overflow = ''; lbImg.src = ''; }
-  document.querySelectorAll('img').forEach(img => {
-    if (img.closest('a')) return;
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', e => { e.preventDefault(); openLb(img.src, img.alt); });
+  // Lightbox: see the viewer script right after this block
+</script>
+<script>
+(function(){
+  var lb=document.getElementById('lb');
+  if(!lb)return;
+  var img=lb.querySelector('.lb-img'),
+      cap=lb.querySelector('.lb-cap'),
+      count=lb.querySelector('.lb-count'),
+      btnClose=lb.querySelector('.lb-close'),
+      btnPrev=lb.querySelector('.lb-prev'),
+      btnNext=lb.querySelector('.lb-next'),
+      hint=lb.querySelector('.lb-hint');
+
+  // Every photo that is not inside a link and not inside the viewer itself
+  var photos=[].slice.call(document.querySelectorAll('img')).filter(function(i){
+    return !i.closest('a') && !i.closest('#lb');
   });
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeLb(); });
-  lbClose.addEventListener('click', closeLb);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+  var cur=-1,lastFocus=null;
+
+  function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  // Same text as the caption shown under the photo on the page.
+  // If a photo has no caption on the page, fall back to its alt text.
+  function captionFor(el){
+    var fig=el.closest('figure');
+    var fc=fig&&fig.querySelector('figcaption');
+    if(fc&&fc.textContent.trim())return fc.innerHTML;
+    return el.alt?esc(el.alt):'';
+  }
+
+  function show(i,dir){
+    cur=(i+photos.length)%photos.length;
+    var p=photos[cur];
+    img.style.setProperty('--dx',(dir<0?'-20px':'20px'));
+    img.classList.remove('swap');void img.offsetWidth;img.classList.add('swap');
+    img.src=p.currentSrc||p.src;
+    img.alt=p.alt||'';
+    cap.innerHTML=captionFor(p);
+    count.textContent=String(cur+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
+    var many=photos.length>1;
+    btnPrev.hidden=btnNext.hidden=!many;
+    if(hint)hint.style.display=many?'':'none';
+  }
+
+  function open(i){
+    lastFocus=document.activeElement;
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+    show(i,1);
+    btnClose.focus();
+  }
+  function close(){
+    lb.classList.remove('open');
+    document.body.style.overflow='';
+    img.src='';
+    cur=-1;
+    if(lastFocus&&lastFocus.focus)lastFocus.focus();
+  }
+
+  photos.forEach(function(p,i){
+    p.style.cursor='zoom-in';
+    p.addEventListener('click',function(e){e.preventDefault();open(i);});
+  });
+
+  btnClose.addEventListener('click',close);
+  btnPrev.addEventListener('click',function(){show(cur-1,-1);});
+  btnNext.addEventListener('click',function(){show(cur+1,1);});
+
+  // click the dark area to close
+  lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('lb-stage'))close();});
+
+  // keyboard
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')close();
+    else if(e.key==='ArrowLeft')show(cur-1,-1);
+    else if(e.key==='ArrowRight')show(cur+1,1);
+  });
+
+  // swipe on phones
+  var sx=null;
+  lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',function(e){
+    if(sx===null)return;
+    var dx=e.changedTouches[0].clientX-sx;sx=null;
+    if(Math.abs(dx)>50)show(cur+(dx<0?1:-1),dx<0?1:-1);
+  },{passive:true});
+})();
 </script>
 <script>
 // Own video first; if the file is missing or can't play, fall back to Facebook's player
@@ -2208,7 +2366,7 @@ document.querySelectorAll('.vid').forEach(function(box){
 <script>
 (function(){
   var D=[
-   {t:"Documentation & QA",i:"📄",p:"I write documentation people can actually use, and I check my work because small errors have real effects.",b:["Documentation Lead for the iDetect capstone thesis","Encoded SAP records into Excel and kept PSI, TMP delivery and BP monitoring records at Toyota Valenzuela","Prepared SOPH forms for back-ordered parts and rechecked part numbers and quantities before saving"],l:[["What I did at OJT","#ojt-did"],["iDetect project","#proj-idetect"]]},
+   {t:"Documentation & QA",i:"📄",p:"I write documentation people can actually use, and I check my work because small errors have real effects.",b:["Documentation Lead for the iDetect capstone thesis","Encoded transaction records into Excel and maintained department records at Toyota Valenzuela","Prepared SOPH forms for back-ordered parts and rechecked part numbers and quantities before saving"],l:[["What I did at OJT","#ojt-did"],["iDetect project","#proj-idetect"]]},
    {t:"Project Management",i:"📋",p:"I keep teams aligned: clear goals, clear deadlines, and clear communication.",b:["Project Manager on multiple group projects","Coordinated timelines and delegated tasks, tracked in Jira","Led the teams behind Piso Politiko and Buwaya Catch"],l:[["Piso Politiko","#proj-piso"],["Buwaya Catch","#proj-buwaya"]]},
    {t:"Programming",i:"💻",p:"I build simple, practical solutions with clean code.",b:["Built this portfolio from scratch with HTML, CSS and JavaScript","Maricopa: a restaurant website with a data-driven daily serving prediction module","ARTA Customer Satisfaction System: a Flutter and Supabase app (group project)"],l:[["Maricopa site","#proj-maricopa"],["ARTA app","#proj-arta"]]},
    {t:"Networking",i:"🌐",p:"Cisco fundamentals, applied to real setups and troubleshooting.",b:["Four Cisco NetAcad certifications, from Networking Basics to Network Support and Security","Helped with computer setup and IP management during my OJT","Troubleshot printers and replaced toner cartridges for the Cashier and Service departments"],l:[["Cisco certifications","#certifications"],["IT support at OJT","#ojt-it"]]},
@@ -2261,7 +2419,7 @@ document.querySelectorAll('.vid').forEach(function(box){
 </script>
 <script>
 (function(){
-  var CATS={"onb": ["Onboarding", "#2b59c3"], "sap": ["SAP and quotations", "#d8342b"], "it": ["IT support", "#0f7b8a"], "cre": ["Creative work", "#e8a317"], "data": ["Data and inventory", "#2e8b57"], "mile": ["Milestone", "#7b3fa0"]}, WEEKS=[{"n": 4, "d": "Jun 29 – Jul 4", "c": "onb", "t": "Orientation and first lessons", "x": "I attended the company orientation and workplace tour and learned how the Parts Department operates. I started encoding part numbers and checking prices in the parts management system, practiced processing purchase requisitions in the Toyota Parts System, encoded employee data in Excel and helped edit a marketing poster.", "k": "Toyota Parts System", "g": ["Orientation", "Parts System", "Excel", "Poster editing"]}, {"n": 5, "d": "Jul 6 – 11", "c": "sap", "t": "Hello, SAP", "x": "I began working in SAP with the Parts Administrator, assisting with client parts requisitions, and encoded SAP data in Excel for documentation. I helped fix printers in the service department, and on July 8 I learned from the parts accessories staff how to invoice orders and create Sales Quotations (SQ) for Marketing Professionals.", "k": "SAP requisitions and quotations", "g": ["SAP", "Sales Quotations", "Excel", "Printer support"]}, {"n": 6, "d": "Jul 13 – 18", "c": "it", "t": "Beyond the Parts Department", "x": "I kept assisting with requisitions and started helping the Service Counterman with part number creation. On July 14 I attended the Toyota General Assembly. I also did IT support: formatting system units, installing Windows, setting up computers, managing IPs and replacing system units, and I helped organize showroom items for a product display.", "k": "IT support and IP management", "g": ["General Assembly", "Windows setup", "IP management", "Part numbers"]}, {"n": 7, "d": "Jul 20 – 25", "c": "sap", "t": "Back-orders and SOPH forms", "x": "I assisted with Sales Quotations (with the accessories staff) and part numbers (with the Service Counterman), helped the Parts Administrator order requested parts through SAP and encoded customer transaction data from SAP into Excel. I prepared customer information slips, prepared SOPH forms for back-ordered parts using SAP and Word, and replaced toner cartridges for Samsung printers in the Cashier and Service Departments.", "k": "SOPH forms for back-ordered parts", "g": ["SAP", "SOPH forms", "Word", "Toner replacement"]}, {"n": 8, "d": "Jul 27 – Aug 1", "c": "sap", "t": "Hands-on with accessories", "x": "I continued the daily SAP tasks and recorded customer transaction details in Excel for proper documentation. I also gained hands-on experience installing vehicle accessories such as luggage trays and side visors, and supported replacing a Samsung printer cartridge in the Service Department.", "k": "Installing vehicle accessories", "g": ["SAP", "Excel records", "Accessories", "Printer support"]}, {"n": 9, "d": "Aug 3 – 8", "c": "data", "t": "Inventory and incentive records", "x": "I monitored and updated parts inventory, assisted with Sales Quotations in SAP, helped process client requests for parts and supported part number creation with the Service Counterman. I also encoded customer transaction details for incentive records in Excel using data from SAP.", "k": "Incentive record encoding", "g": ["Inventory", "SAP", "Excel", "Customer slips"]}, {"n": 10, "d": "Aug 10 – 15", "c": "cre", "t": "Canva and the FJ Cruiser price list", "x": "I helped process requested parts through SAP, kept inventory records updated and prepared customer information slips and quotations. I edited the Parts Department organizational chart in Canva and updated the accessories price list for the FJ Cruiser.", "k": "Designing in Canva", "g": ["Canva", "Org chart", "Price list", "SAP"]}, {"n": 11, "d": "Aug 17 – 22", "c": "cre", "t": "On camera", "x": "I kept up with SAP processing, inventory records and part numbering. On August 22 I took part in a parts promotional video as an on-camera actor, and I encoded PSI data to make sure the information was properly recorded.", "k": "On-camera work and PSI encoding", "g": ["Promo video", "PSI data", "SAP", "Inventory"]}, {"n": 12, "d": "Aug 24 – 29", "c": "data", "t": "Verifying back-orders", "x": "I updated and organized PSI records and verified back-ordered parts in SAP to confirm that pending orders were accurate. I reviewed stock levels, prepared customer information forms and supported the Parts Warehouseman by posting goods in SAP and releasing oils and other parts to the mechanics.", "k": "Releasing parts to mechanics", "g": ["Back-orders", "PSI records", "Warehouse", "Goods posting"]}, {"n": 14, "d": "Sep 7 – 12", "c": "data", "t": "Posting goods in SAP", "x": "I assisted with parts requests and SAP transactions, checked inventory levels and was guided by the Parts Warehouseman on how to post goods in SAP so received items are properly processed. I helped prepare and release parts for specific mechanic orders, checking inventory in the morning and afternoon.", "k": "Goods posting in SAP", "g": ["Goods posting", "Inventory", "Mechanic orders", "SAP"]}, {"n": 15, "d": "Sep 14 – 19", "c": "data", "t": "Checking parts availability", "x": "I checked parts availability in the Parts System by entering part numbers, monitored inventory levels in the morning and afternoon and encoded customer information from SAP records into Excel. I also helped post received goods in SAP with the Parts Warehouseman and prepared parts for the mechanics.", "k": "Parts System availability checks", "g": ["Parts System", "Inventory", "Excel", "Goods posting"]}, {"n": 16, "d": "Sep 21 – 26", "c": "data", "t": "A steady daily routine", "x": "I continued helping post received goods in SAP with the warehouse, verifying parts availability, monitoring inventory and helping provide parts for mechanic orders. I encoded customer information into Excel, along with the daily delivered items from the TMP records.", "k": "TMP delivery encoding", "g": ["TMP records", "Goods posting", "Excel", "Inventory"]}, {"n": 17, "d": "Sep 28 – Oct 3", "c": "data", "t": "More records, more trust", "x": "I encoded customer details from SAP into Excel, verified the availability of requested parts and monitored inventory at different times of the day. On October 3 I encoded BP monitoring data in Excel and recorded the pulled-out parts.", "k": "BP monitoring records", "g": ["BP monitoring", "Excel", "Parts System", "SAP"]}, {"n": 18, "d": "Oct 5 – 10", "c": "data", "t": "Consistency", "x": "I kept assisting the mechanics by preparing and providing the required parts, verifying availability in the Parts System and posting goods in SAP. I also encoded customer details from SAP into Excel and monitored inventory throughout the day.", "k": "Working steadily and accurately", "g": ["Mechanic support", "Goods posting", "Excel", "Inventory"]}, {"n": 19, "d": "Oct 12 – 17", "c": "data", "t": "Running on routine", "x": "I continued posting goods in SAP, monitoring inventory at different times of the day, verifying requested parts and assisting the mechanics with the parts they needed, while encoding customer details from SAP into Excel.", "k": "Working steadily and accurately", "g": ["Goods posting", "Inventory", "Parts System", "Excel"]}, {"n": 20, "d": "Oct 19 – 24", "c": "mile", "t": "The OJT visitation", "x": "I continued my routine tasks in the Parts Department. On October 22 I took part in the OJT visitation, which included a brief interview with the HR representative and the OJT coordinator, and a photo opportunity with the certificate.", "k": "Speaking up in a professional interview", "g": ["OJT visitation", "HR interview", "Certificate", "Routine tasks"]}, {"n": 21, "d": "Oct 26 – 31", "c": "data", "t": "Down the home stretch", "x": "I kept assisting the mechanics, verifying the availability of requested parts, posting goods in SAP, monitoring inventory levels throughout the day and encoding customer details from SAP into Excel.", "k": "Working steadily and accurately", "g": ["Goods posting", "Inventory", "Parts System", "Excel"]}, {"n": 22, "d": "Nov 2 – 5", "c": "mile", "t": "Final week and final day", "x": "This was my final week at Toyota Valenzuela. I kept up my daily inventory monitoring, goods posting, parts verification, preparing parts for the mechanics and encoding customer details into Excel, and completed my final day of On-the-Job Training on November 5, 2026.", "k": "A completed OJT", "g": ["Final day", "Inventory", "SAP", "Excel"]}];
+  var CATS={"onb": ["Onboarding", "#2b59c3"], "sap": ["Parts and systems", "#d8342b"], "cre": ["Creative work", "#e8a317"], "data": ["Records and inventory", "#2e8b57"], "mile": ["Milestone", "#7b3fa0"]}, WEEKS=[{"l": "Wk 4–5", "r": "Weeks 4–5", "d": "Jun 29 – Jul 11", "c": "onb", "t": "Orientation and first lessons", "x": "I started with the company orientation and learned how the Parts Department works. I was introduced to the department’s systems, began basic encoding and documentation tasks, and picked up the daily workflow.", "k": "Workplace systems basics", "g": ["Orientation", "Systems", "Excel"]}, {"l": "Wk 6–8", "r": "Weeks 6–8", "d": "Jul 13 – Aug 1", "c": "sap", "t": "Learning across roles", "x": "I learned alongside staff in different roles: parts ordering, quotations and part numbering. I also supported IT tasks such as computer setup and printer upkeep, and had hands-on practice with vehicle accessories.", "k": "Cross-functional skills", "g": ["SAP", "Quotations", "IT support", "Accessories"]}, {"l": "Wk 9–12", "r": "Weeks 9–12", "d": "Aug 3 – Aug 29", "c": "cre", "t": "Contributing beyond the desk", "x": "I took on more responsibility: monitoring inventory, keeping records updated, and helping with department materials such as the organizational chart and promotional content, including taking part in a parts promotional video.", "k": "Design and communication", "g": ["Inventory", "Canva", "Promo video", "Records"]}, {"l": "Wk 14–19", "r": "Weeks 14–19", "d": "Sep 7 – Oct 17", "c": "data", "t": "Daily routine and accuracy", "x": "My days settled into a steady routine of inventory checks, goods posting, parts verification, supporting the mechanics and recording data in Excel. The focus was accuracy and consistency.", "k": "Accuracy and consistency", "g": ["Inventory", "Goods posting", "Verification", "Excel"]}, {"l": "Wk 20–22", "r": "Weeks 20–22", "d": "Oct 19 – Nov 5", "c": "mile", "t": "Visitation and wrap-up", "x": "I continued my routine tasks, took part in the OJT visitation with company and school representatives, and completed my On-the-Job Training on November 5, 2026.", "k": "A completed OJT", "g": ["OJT visitation", "Final day", "Reflection"]}];
   var chips=document.getElementById('wk-chips'); if(!chips) return;
   var legend=document.getElementById('wk-legend'), panel=document.getElementById('wk-panel');
   var idx=0, btns=[], PER=6, page=0, pages=Math.ceil(WEEKS.length/PER);
@@ -2270,8 +2428,7 @@ document.querySelectorAll('.vid').forEach(function(box){
   function setPage(p){
     page=Math.max(0,Math.min(pages-1,p));
     btns.forEach(function(b,j){ b.hidden=(Math.floor(j/PER)!==page); });
-    var a=WEEKS[page*PER].n, z=WEEKS[Math.min(WEEKS.length,(page+1)*PER)-1].n;
-    document.getElementById('wk-prange').textContent='Weeks '+a+'–'+z;
+    document.getElementById('wk-prange').textContent='Phases';
     Array.prototype.forEach.call(dots.children,function(d,k){ d.classList.toggle('on',k===page); });
     document.getElementById('wk-pprev').disabled=(page===0);
     document.getElementById('wk-pnext').disabled=(page===pages-1);
@@ -2281,7 +2438,7 @@ document.querySelectorAll('.vid').forEach(function(box){
   Object.keys(CATS).forEach(function(k){ var li=document.createElement('li'); li.innerHTML='<i style="background:'+CATS[k][1]+'"></i>'+CATS[k][0]; legend.appendChild(li); });
   WEEKS.forEach(function(w,i){
     var b=document.createElement('button'); b.type='button'; b.className='wk-chip'; b.setAttribute('role','tab');
-    b.style.setProperty('--c',CATS[w.c][1]); b.textContent='Wk '+w.n; if(w.c==='cre'){b.style.color='#2a1a00';} b.setAttribute('aria-label','Week '+w.n+', '+w.t);
+    b.style.setProperty('--c',CATS[w.c][1]); b.textContent=w.l; if(w.c==='cre'){b.style.color='#2a1a00';} b.setAttribute('aria-label',w.r+', '+w.t);
     b.addEventListener('click',function(){ show(i); }); chips.appendChild(b); btns.push(b);
   });
   function show(i){
@@ -2289,9 +2446,9 @@ document.querySelectorAll('.vid').forEach(function(box){
     var np=Math.floor(i/PER); if(np!==page) setPage(np);
     btns.forEach(function(b,j){ b.classList.toggle('on',j===i); b.classList.toggle('done',j<i); b.setAttribute('aria-selected',j===i); });
     panel.style.setProperty('--c',c[1]);
-    document.getElementById('wk-ghost').textContent=('0'+w.n).slice(-2);
+    document.getElementById('wk-ghost').textContent=('0'+(i+1)).slice(-2);
     var cat=document.getElementById('wk-cat'); cat.textContent=c[0]; cat.style.background=c[1]; cat.style.color=(w.c==='cre')?'#2a1a00':'#fff';
-    document.getElementById('wk-date').textContent='Week '+w.n+' · '+w.d+', 2026';
+    document.getElementById('wk-date').textContent=w.r+' · '+w.d+', 2026';
     document.getElementById('wk-title').textContent=w.t;
     document.getElementById('wk-text').textContent=w.x;
     document.getElementById('wk-new').textContent=w.k;
@@ -2305,6 +2462,7 @@ document.querySelectorAll('.vid').forEach(function(box){
   document.getElementById('wk-prev').addEventListener('click',function(){ if(idx>0) show(idx-1); });
   document.getElementById('wk-next').addEventListener('click',function(){ if(idx<WEEKS.length-1) show(idx+1); });
   setPage(0); show(0);
+  if(pages<2){document.getElementById('wk-pager').style.display='none';}
 })();
 
 // Resume download with a friendly fallback
@@ -2467,6 +2625,68 @@ document.querySelectorAll('.vid').forEach(function(box){
     function fb(){var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';dlg.appendChild(ta);ta.select();try{document.execCommand('copy');ok();}catch(e){}ta.remove();}
     if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok,fb);}else{fb();}
   });
+})();
+</script>
+<script>
+/* Sample Work carousel: turns the .gal photos into an interactive carousel (photos + captions stay in the HTML) */
+(function(){
+  var gal=document.querySelector('.gal'); if(!gal)return;
+  var figs=[].slice.call(gal.querySelectorAll('figure')),n=figs.length; if(n<2)return;
+  var idx=0;
+  function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;}
+  gal.classList.add('car');
+  var stage=el('div','car-stage');stage.tabIndex=0;
+  stage.setAttribute('role','group');stage.setAttribute('aria-roledescription','carousel');stage.setAttribute('aria-label','Sample work photos');
+  figs.forEach(function(f){stage.appendChild(f);});
+  var prev=el('button','car-btn car-prev','‹'),next=el('button','car-btn car-next','›');
+  prev.type=next.type='button';prev.setAttribute('aria-label','Previous photo');next.setAttribute('aria-label','Next photo');
+  stage.appendChild(prev);stage.appendChild(next);
+  var cap=el('div','car-cap'),thumbs=el('div','car-thumbs'),count=el('div','car-count');
+  cap.setAttribute('aria-live','polite');
+  var tb=figs.map(function(f,i){
+    var b=el('button');b.type='button';b.setAttribute('aria-label','Show photo '+(i+1));
+    var im=f.querySelector('img');b.innerHTML='<img src="'+im.getAttribute('src')+'" alt="" loading="lazy">';
+    b.addEventListener('click',function(){go(i);});thumbs.appendChild(b);return b;
+  });
+  gal.appendChild(stage);gal.appendChild(cap);gal.appendChild(thumbs);gal.appendChild(count);
+
+  function layout(){
+    figs.forEach(function(f,i){
+      var d=i-idx;if(d>n/2)d-=n;if(d<-n/2)d+=n;var a=Math.abs(d);
+      f.classList.toggle('is-active',a===0);
+      f.style.zIndex=10-a;
+      f.style.opacity=a===0?1:a===1?.6:a===2?.25:0;
+      f.style.pointerEvents=a>2?'none':'auto';
+      f.style.filter=a?'brightness(.72) saturate(.8)':'none';
+      f.style.transform='translateX(calc(-50% + '+(d*58)+'%)) scale('+(1-a*.14)+')';
+      f.setAttribute('aria-hidden',a?'true':'false');
+    });
+    tb.forEach(function(b,i){b.classList.toggle('on',i===idx);});
+    var c=figs[idx].querySelector('figcaption');
+    cap.innerHTML=c?c.innerHTML:'';
+    cap.style.animation='none';void cap.offsetWidth;cap.style.animation='';
+    count.textContent=String(idx+1).padStart(2,'0')+' / '+String(n).padStart(2,'0');
+  }
+  function go(i){idx=(i+n)%n;layout();}
+  prev.addEventListener('click',function(){go(idx-1);});
+  next.addEventListener('click',function(){go(idx+1);});
+
+  // click a side photo to bring it to the centre; click the centre photo to open the big viewer
+  figs.forEach(function(f,i){f.addEventListener('click',function(e){
+    if(i!==idx){e.stopPropagation();e.preventDefault();go(i);}
+  },true);});
+
+  stage.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'){e.preventDefault();go(idx-1);}
+    else if(e.key==='ArrowRight'){e.preventDefault();go(idx+1);}
+  });
+  var sx=null;
+  stage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+  stage.addEventListener('touchend',function(e){
+    if(sx!==null){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)go(idx+(dx<0?1:-1));}
+    sx=null;
+  },{passive:true});
+  layout();
 })();
 </script>
 </body>
