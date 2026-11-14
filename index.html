@@ -2277,7 +2277,10 @@ body{overflow-x:clip}
   var photos=[].slice.call(document.querySelectorAll('img')).filter(function(i){
     return !i.closest('a') && !i.closest('#lb');
   });
-  var cur=-1,lastFocus=null;
+  var list=[],cur=-1,lastFocus=null;
+  // Browsing stays inside the part of the page the photo belongs to (Sample Work, People, Desk photos, etc.)
+  var GROUPS='.gal, .people, .rf-desk, .fin, .co-spot';
+  function groupOf(p){return p.closest(GROUPS)||p.closest('section')||document.body;}
 
   function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
@@ -2291,15 +2294,15 @@ body{overflow-x:clip}
   }
 
   function show(i,dir){
-    cur=(i+photos.length)%photos.length;
-    var p=photos[cur];
+    cur=(i+list.length)%list.length;
+    var p=list[cur];
     img.style.setProperty('--dx',(dir<0?'-20px':'20px'));
     img.classList.remove('swap');void img.offsetWidth;img.classList.add('swap');
     img.src=p.currentSrc||p.src;
     img.alt=p.alt||'';
     cap.innerHTML=captionFor(p);
-    count.textContent=String(cur+1).padStart(2,'0')+' / '+String(photos.length).padStart(2,'0');
-    var many=photos.length>1;
+    count.textContent=String(cur+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
+    var many=list.length>1;
     btnPrev.hidden=btnNext.hidden=!many;
     if(hint)hint.style.display=many?'':'none';
   }
@@ -2308,7 +2311,9 @@ body{overflow-x:clip}
     lastFocus=document.activeElement;
     lb.classList.add('open');
     document.body.style.overflow='hidden';
-    show(i,1);
+    var g=groupOf(photos[i]);
+    list=photos.filter(function(x){return groupOf(x)===g;});
+    show(list.indexOf(photos[i]),1);
     btnClose.focus();
   }
   function close(){
